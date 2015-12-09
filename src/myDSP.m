@@ -48,7 +48,7 @@ function [SIGNAL, nowin] = reshape(signal, win_size, overlap_p)
     end
 
     overlap = round(overlap_p*win_size);
-    nowin = floor((len - win_size)/(win_size - overlap) + 1); % # of windows
+    nowin = floor((len-win_size)/(win_size-overlap) + 1); % # of windows
 
     SIGNAL = zeros(win_size, nowin, nocha);
     for k = 1 : nocha
@@ -72,6 +72,5 @@ function Y = discretize( U, N, V )
     Y = interp1( [ -2^(N-1) 2^(N-1)-1 ], [-V V], U );
 end
 
-end
 end
 
