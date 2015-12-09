@@ -1,0 +1,146 @@
+\documentclass[10pt,letterpaper,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage[toc,page]{appendix}
+\usepackage{listings}
+\usepackage{caption}
+
+
+
+\addbibresource{ref.bib}
+
+\author{\makebox[.9\textwidth]{Guilherme Aramizo Ribeiro}\\PhD Student 
+\and Patcharapol Gorgitrattanagul \\Teaching Assistant \and Dr. Jason R Blough\\Instructor}
+\title{Dynamic Measurement and Signal Processing \\Lab 2: Quantization}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    A physical signal was measured thought a data acquisition system in order to observe the effects of quantization. A deeper analysis on the quantization error was explored with simulated signals on MATLAB, verifying that the signal to noise ratio is dependent on the number of bits and input voltage range of the acqusition system.
+\end{abstract}
+
+\section{Background and Objectives}
+    
+    The objective of the laboratory activity is to advance the students' knowledge and practical expertise in quantization on acquired data. This section will review the background about quantization characteristics of Analog to Digital Converters (ADC) and signal to noise ratio (SNR).
+    
+    As discussed by \cite{smith}, quantization relates to the amplitude of digitized signals after the acquisition. It cannot be confused with sampling, which is in turn related to the sampling time characteristics.
+    
+    When it comes to quantization values, a data acquisition device is characterized by input voltage range, $\{V_{low}; V_{high}\}$, and the number of bits the acquired data is stored, Q. It follows that the minimum voltage change the system can detect, called resolution R, is calculated as
+    
+    \begin{equation}
+        R = \dfrac{V_{high} - V_{low}}{2^Q}
+        \label{eq:resolution}
+    \end{equation}
+    
+    The quantization error is an inherent source of noise, and therefore, sets a minimum noise floor for any measured signal. So the Signal to Noise Ratio (SNR) will be limited by the ADC conversion precision and can be calculated as, in decibels:
+    
+    \begin{equation}
+        SNR_{ADC} = 20\ log_{10}\ 2^Q
+    \end{equation}
+
+\section{Apparatus}
+    The material used in the lab activity is listed bellow:
+    
+
+    \begin{itemize}
+      \item Oscilloscope 54621A;
+      \item Data Acquisition NI cDAQ 9172;
+      \item Data Acquisition NI 9234;
+      \item Signal Generator AFG310;
+      \item Desktop computer with MATLAB, LabVIEW and device drivers installed \ldots
+    \end{itemize}
+
+
+\section{Experimental Procedures}
+    The lab activity contains two components: an in-lab experimental procedure and a simulation performed with the MATLAB software. Both activities are described in detail in the lab manual, so this section describes the exceptions found in the activity.
+    
+    It wasn't possible to decrease the signal generator output amplitude such that it would be mixed in the noise floor. Because the amplitude value is adjusted in discrete steps and the minimal value is well above the noise floor.
+
+
+\section{Data Summary}
+    A sinusoidal signals with frequency of $356\ Hz$ and amplitude of $1.24\ V_{RMS}$ were acquired during the laboratory section. The time history of the experimental and MATLAB generated data was added to the Appendix, Figure \ref{fig:range5}, \ref{fig:range300} and \ref{fig:range075}. The experiment run using a range of $\pm 5\ V$ is presented in the frequency domain in the Figure \ref{fig:spectral5}.
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\linewidth]{img/sample.png}
+        \caption{Overlayed plot of experimental and simulated data in the frequency domain for $\pm 5\ V$ of range and 8, 12 and 24 number of bits.}
+        \label{fig:spectral5}
+    \end{figure}
+
+
+\section{Interpretation and Analysis}
+    Equation \ref{eq:resolution} demonstrates that a broad input range or low number of bits decrease the resolution. The time history of the simulation data confirms this statement: Figure \ref{fig:range5} and \ref{fig:range300} both show that the samples are closer to the nominal curve as the number of bits increase, and this distance is smaller in the experiment with the smaller range, $\pm 5\ V$. Also, voltage saturation was observed in the Figure \ref{fig:range075}, where the simulated signals saturates on $\pm 0.75\ V$.
+    
+    Another point from Figure \ref{fig:spectral5} is that the noise floor of the experimental data is higher than the simulated 24 bits counterpart, even thought the acquisition system also has a 24 bits precision. The experimental data also accounts with noises in the environment and in the DAQ electronics. 
+    
+    The oscilloscope's experimental SNR analysis was not possible because the signal generator couldn't reduce the sine amplitude low enough. But according to their respective data-sheet, the oscilloscope has a 8 bit resolution, while the acquisition board has 24 bits. And both systems have $\pm 5\ V$ as the narrower acquisition range. So according to Equation~\ref{eq:resolution}, the minimum signal amplitude detectable is $19\ mV$ and $298\ \eta V$, respectively. This follows that the NI system has higher SNR.
+    
+    Finally, in respect to the critical thinking section, for a sine wave with period of $T = 56 \mu s$ and RMS voltage of $A_{RMS} = 0.35\ V$, the desired sampling rate, $F_s$, voltage range, $L$, and number of bits, Q, for the requirements described in the manual are
+    \begin{equation}
+    F_s = 524288\ Hz \approx 2^{nextpow2(20/T)}
+    \end{equation}
+    
+    \begin{equation}
+    L = \pm 1\ V \approx \pm 2\ (A_{RMS}\ \sqrt 2)
+    \end{equation}
+    
+    \begin{equation}
+    Q = 8 > log_2 20
+    \end{equation}
+    
+    being $n = nextpow2(x)$ a function that returns the next power of 2 of x, or in other words, an integer n, $2^{n-1} < x \leq 2^n$.
+    
+\section{Conclusions}
+    On this assignment a physical signal was measured thought a data acquisition system in order to observe the effects of quantization. This data was also compared to simulated signals on MATLAB. Finally, the studies of acquisition parameters were explored with an example case.
+    
+    From the frequency analysis of the discretized sine waves, higher SNR was observed in signals with higher number of bits and higher input voltage band usage. But experimental data has an inherent process noise floor that might be more significant than the quantization error, thus limiting the SNR to a maximum value.
+
+\printbibliography
+
+\onecolumn
+\clearpage
+\appendix
+\appendixpage
+
+\section{Effects of Number of Bits and Voltage Range}
+    \begin{figure}[h]
+    	\centering
+        \includegraphics[width=0.6\linewidth]{img/sample}
+        \captionsetup{width=0.6\textwidth}
+        \caption{Time history of the experimental data and quantized simulated data for a ADC input range of $\pm 5\ V$}
+        \label{fig:range5}
+    \end{figure}
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.6\linewidth]{img/sample}
+        \captionsetup{width=0.6\textwidth}
+        \caption{Time history of the experimental data and quantized simulated data for a ADC input range of $\pm 300\ V$}
+        \label{fig:range300}
+    \end{figure}
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.6\linewidth]{img/sample}
+        \captionsetup{width=0.6\textwidth}
+        \caption{Time history of the experimental data and quantized simulated data for a ADC input range of $\pm 0.75\ V$}
+        \label{fig:range075}
+    \end{figure}
+
+\clearpage
+
+%\clearpage
+\section{MATLAB DSP Functions}
+    \lstinputlisting[language=Matlab]{../src/myDSP.m}
+
+
+
+\end{document}
