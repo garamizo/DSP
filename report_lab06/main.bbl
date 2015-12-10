@@ -1,0 +1,66 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 2.5 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{smith}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Smith}{S.}%
+     {Steven~W.}{S.~W.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Newnes}%
+  }
+  \keyw{DSP}
+  \strng{namehash}{SSW1}
+  \strng{fullhash}{SSW1}
+  \field{isbn}{9780750674447}
+  \field{series}{Demystifying Technology Series}
+  \field{title}{Digital Signal Processing. A Practical Guide for Engineers and
+  Scientists}
+  \field{year}{2003}
+\endentry
+
+\entry{einstein}{article}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Einstein}{E.}%
+     {Albert}{A.}%
+     {}{}%
+     {}{}}%
+  }
+  \keyw{physics}
+  \strng{namehash}{EA1}
+  \strng{fullhash}{EA1}
+  \verb{doi}
+  \verb http://dx.doi.org/10.1002/andp.19053221004
+  \endverb
+  \field{number}{10}
+  \field{pages}{891\bibrangedash 921}
+  \field{title}{{Zur Elektrodynamik bewegter K{\"o}rper}. ({German}) [{On} the
+  electrodynamics of moving bodies]}
+  \field{volume}{322}
+  \field{journaltitle}{Annalen der Physik}
+  \field{year}{1905}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput

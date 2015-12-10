@@ -1,0 +1,11 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
+The style file: biblatex.bst
+Database file #1: main-blx.bib
+Database file #2: ../docs/refs.bib
+You're missing a field name---line 25 of file ../docs/refs.bib
+ : 
+ : %    author    = "Donald Knuth",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Biblatex version: 3.0
+(There was 1 error message)

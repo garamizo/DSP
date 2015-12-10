@@ -72,5 +72,29 @@ function Y = discretize( U, N, V )
     Y = interp1( [ -2^(N-1) 2^(N-1)-1 ], [-V V], U );
 end
 
+function [blocksize, noc] = optimize_blocksize(F0, Fs, noc_range, Fmin)
+    
+    min_time = 2/Fmin;
+    min_blocksize = min_time/Fs;
+    
+    nocs = noc_range(1) : noc_range(2);
+    approx_blocksizes = nocs * Fs/F0;
+    % disregard too small block sizes
+    approx_blocksizes(approx_blocksizes < min_blocksize) = [];
+    if isempty(approx_blocksizes)
+        error('Slower component do not fit window choices')
+    end
+    blocksizes = round(approx_blocksizes);
+    
+    [err, idx] = min(abs(approx_blocksizes - blocksizes));
+    blocksize = blocksizes(idx(1));
+    noc = blocksize * F0/Fs;
+    
+    if err > 1e-3
+        warning(['Bad block size. Round error: ' num2str(err)])
+    end
+end
+
+end
 end
 

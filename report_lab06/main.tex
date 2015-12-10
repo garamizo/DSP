@@ -11,48 +11,54 @@
 \usepackage{listings}
 \usepackage{caption}
 
+% remove those when done
+\usepackage[colorinlistoftodos, textwidth=\marginparwidth]{todonotes}
+\setlength{\marginparwidth}{2cm} % for the todonotes
+
 \addbibresource{../docs/refs.bib}
 
 \author{\makebox[.9\textwidth]{Guilherme Aramizo Ribeiro}\\PhD Student 
 \and Patcharapol Gorgitrattanagul \\Teaching Assistant \and Dr. Jason R Blough\\Instructor}
-\title{Dynamic Measurement and Signal Processing \\Lab 2: Quantization}
+\title{Dynamic Measurement and Signal Processing \\Lab 6: Order Tracking}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-    A physical signal was measured thought a data acquisition system in order to observe the effects of quantization. A deeper analysis on the quantization error was explored with simulated signals on MATLAB, verifying that the signal to noise ratio is dependent on the number of bits and input voltage range of the acqusition system.
+    Hello! \todo{Some comment}
+    
 \end{abstract}
 
 \section{Background and Objectives}
-    
-    The objective of the laboratory activity is to advance the students' knowledge and practical expertise in quantization on acquired data. This section will review the background about quantization characteristics of Analog to Digital Converters (ADC) and signal to noise ratio (SNR).
-    
-    As discussed by \cite{smith}, quantization relates to the amplitude of digitized signals after the acquisition. It cannot be confused with sampling, which is in turn related to the sampling time characteristics.
-    
-    When it comes to quantization values, a data acquisition device is characterized by input voltage range, $\{V_{low}; V_{high}\}$, and the number of bits the acquired data is stored, Q. It follows that the minimum voltage change the system can detect, called resolution R, is calculated as
-    
+
+	The purpose of this lab is to understand and apply order tracking algorithms in real data. A Fast Fourier Transform (FFT) based and a Time Varying Discrete Fourier Transform (TVDFT) are used to visualize the order of a test bench motor. This section will overview important aspects of rotating machine testing and the two order tracking methods.
+	
+	When working with rotating machines, \todo{rotating machine overview}.
+	
+	The FFT order tracking \todo{background of FFT OT}.
+	
     \begin{equation}
         R = \dfrac{V_{high} - V_{low}}{2^Q}
         \label{eq:resolution}
-    \end{equation}
-    
-    The quantization error is an inherent source of noise, and therefore, sets a minimum noise floor for any measured signal. So the Signal to Noise Ratio (SNR) will be limited by the ADC conversion precision and can be calculated as, in decibels:
-    
+    \end{equation} \todo{Show FFT equation}
+	
+	The TVDFT order tracking \todo{background of TVDFT OT}.
+	
     \begin{equation}
-        SNR_{ADC} = 20\ log_{10}\ 2^Q
-    \end{equation}
+        R = \dfrac{V_{high} - V_{low}}{2^Q}
+        \label{eq:resolution}
+    \end{equation} \todo{Show TVDFT equation}
 
 \section{Apparatus}
     The material used in the lab activity is listed bellow:
-    
 
     \begin{itemize}
-      \item Oscilloscope 54621A;
-      \item Data Acquisition NI cDAQ 9172;
-      \item Data Acquisition NI 9234;
-      \item Signal Generator AFG310;
-      \item Desktop computer with MATLAB, LabVIEW and device drivers installed \ldots
+		\item Speed controlled DC motor with an unbalanced mass; \todo{name}
+		\item Tachometer; \todo{name}
+		\item Accelerometer;  \todo{name}
+		\item Data Acquisition NI cDAQ 9172;
+		\item Data Acquisition NI 9234;
+		\item Desktop computer with MATLAB, LabVIEW and device drivers installed \ldots
     \end{itemize}
 
 
@@ -133,9 +139,11 @@
     \end{figure}
 
 \clearpage
+\section{Main Script}
+    \lstinputlisting[language=Matlab]{../src/lab06.m}
 
-%\clearpage
-\section{MATLAB DSP Functions}
+\clearpage
+\section{Auxiliary DSP Functions}
     \lstinputlisting[language=Matlab]{../src/myDSP.m}
 
 
