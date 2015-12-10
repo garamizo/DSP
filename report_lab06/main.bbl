@@ -16,25 +16,21 @@
   {}
 \endgroup
 
-\entry{smith}{book}{}
+\entry{blough1}{article}{}
   \name{author}{1}{}{%
     {{}%
-     {Smith}{S.}%
-     {Steven~W.}{S.~W.}%
+     {Blough}{B.}%
+     {Jason~R.}{J.~R.}%
      {}{}%
      {}{}}%
   }
-  \list{publisher}{1}{%
-    {Newnes}%
-  }
-  \keyw{DSP}
-  \strng{namehash}{SSW1}
-  \strng{fullhash}{SSW1}
-  \field{isbn}{9780750674447}
-  \field{series}{Demystifying Technology Series}
-  \field{title}{Digital Signal Processing. A Practical Guide for Engineers and
-  Scientists}
-  \field{year}{2003}
+  \strng{namehash}{BJR1}
+  \strng{fullhash}{BJR1}
+  \field{title}{A Survey of DSP Methods for Rotating Machinery Analysis, What
+  is Needed, What is Available}
+  \field{journaltitle}{Symposium on Emerging Trends in Vibration and Noise
+  Engineering}
+  \field{year}{2001}
 \endentry
 
 \entry{einstein}{article}{}

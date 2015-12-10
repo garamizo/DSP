@@ -10,6 +10,9 @@
 \usepackage[toc,page]{appendix}
 \usepackage{listings}
 \usepackage{caption}
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 % remove those when done
 \usepackage[colorinlistoftodos, textwidth=\marginparwidth]{todonotes}
@@ -33,9 +36,35 @@
 
 	The purpose of this lab is to understand and apply order tracking algorithms in real data. A Fast Fourier Transform (FFT) based and a Time Varying Discrete Fourier Transform (TVDFT) are used to visualize the order of a test bench motor. This section will overview important aspects of rotating machine testing and the two order tracking methods.
 	
-	When working with rotating machines, \todo{rotating machine overview}.
+	As presented in \cite{blough1}, Order Tracking analyses the non-stationary frequency components associated to a rotating machine in operation. It differs from standard Digital Signal Processing (DSP) techniques due to the non-stationary nature of the frequency of interest. In other words:
+	
+	\begin{equation}
+	X(t) = A(k,t)\sin(2 \pi i (k/p) t + \Phi _k)
+	\end{equation}	 
+
+	\begin{tabular}{r c m{5 cm}}
+	where & $ A $ & is the amplitude \\ 
+	 & $ \Phi $ & is the phase angle of order $ k $ \\ 
+	 & $ p $ & is the period of primary order \\ 
+	 & $ t $ & is time \\ 
+	 & $ k $ & is the tracked order \\ 
+	\end{tabular} 
+	\todo{rotating machine overview}.
+	
+	Order refers to the signal component whose frequency is a factor of the primary frequency. It can vary in amplitude and frequency over time. The amplitude variation causes errors in its tracking because all the order tracking methods consider a semi-constant amplitude over time.
 	
 	The FFT order tracking \todo{background of FFT OT}.
+	
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\STATE $ acc, tach \leftarrow sample(blocksize) $
+			\STATE Another line
+			\STATE Do this
+			\STATE Do that $ a = 2 $
+		\end{algorithmic}
+		\caption{FFT Based Order Tracking}
+		\label{algo:fft}
+	\end{algorithm}
 	
     \begin{equation}
         R = \dfrac{V_{high} - V_{low}}{2^Q}
@@ -53,9 +82,11 @@
     The material used in the lab activity is listed bellow:
 
     \begin{itemize}
-		\item Speed controlled DC motor with an unbalanced mass; \todo{name}
+		\item Speed adjustable DC motor with an unbalanced mass; \todo{name}
 		\item Tachometer; \todo{name}
 		\item Accelerometer;  \todo{name}
+		\item Signal conditioner; \todo{name}
+		\item Accelerometer Hand Calibrator; \todo{name}
 		\item Data Acquisition NI cDAQ 9172;
 		\item Data Acquisition NI 9234;
 		\item Desktop computer with MATLAB, LabVIEW and device drivers installed \ldots
@@ -63,6 +94,19 @@
 
 
 \section{Experimental Procedures}
+	A test bench motor with speed adjust is instrument with a tachometer sensor and mounted on a base. The interface between the base and the ground has a layer of foam that allows the platform to oscillate vertically. An 1-axis accelerometer is glued into the center of the platform.
+	
+	Initially, the accelerometer is calibrated with the \todo{insert calibrator name here}. At $ 149.2\ Hz $ the calibrator oscillates by $ 1 g RMS $. The square rooted auto-power at $ 149.2\ Hz $, $ A_{f = 149.2\ Hz} $, was measured at $ X\ V $\todo{fill value}. The calibration factor, $ c $ was then calculated as
+	
+	\begin{equation}
+	c = \frac{1 g}{A_{f = 149.2\ Hz}} = \frac{X}{X} = X
+	\end{equation} \todo{fill value}
+	
+	The acquisition parameters were selected as to capture $ 32 $ blocks of $ 476 $ samples, measured at $ 1.651\ kHz $, calculate the auto-power with a Flat Top window. The window size is such that the vibrating frequency falls within the center of a frequency bin to avoid leakage. The sampling frequency is higher than the Nyquist rate.
+	
+	 
+	
+	On the center of the base, a 1-axis accelerometer 
     The lab activity contains two components: an in-lab experimental procedure and a simulation performed with the MATLAB software. Both activities are described in detail in the lab manual, so this section describes the exceptions found in the activity.
     
     It wasn't possible to decrease the signal generator output amplitude such that it would be mixed in the noise floor. Because the amplitude value is adjusted in discrete steps and the minimal value is well above the noise floor.

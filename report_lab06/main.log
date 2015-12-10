@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.9)  9 DEC 2015 21:25
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.9)  9 DEC 2015 23:49
 entering extended mode
 **main.tex
 (\\mtucifs3.iso.mtu.edu\home\Documents\dsp\report_lab06\main.tex
@@ -616,6 +616,39 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 \c@ContinuedFloat=\count228
 Package caption Info: listings package is loaded.
 )
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\array.sty"
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen126
+\extrarowheight=\dimen127
+\NC@list=\toks23
+\extratabsurround=\skip55
+\backup@length=\skip56
+)
+("H:\Application Data\MiKTeX\2.9\tex\latex\algorithms\algorithm.sty"
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count229
+\float@exts=\toks24
+\float@box=\box30
+\@float@everytoks=\toks25
+\@floatcapt=\box31
+)
+\@float@every@algorithm=\toks26
+\c@algorithm=\count230
+)
+("H:\Application Data\MiKTeX\2.9\tex\latex\algorithms\algorithmic.sty"
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count231
+\c@ALC@line=\count232
+\c@ALC@rem=\count233
+Normal \count register pool exhausted, switching to extended pool.
+\c@ALC@depth=\count277
+\ALC@tlm=\skip57
+\algorithmicindent=\skip58
+)
 ("H:\Application Data\MiKTeX\2.9\tex\latex\todonotes\todonotes.sty"
 Package: todonotes 2015/07/09 .dtx Todonotes source and documentation.
 Package: todonotes 2012/07/25
@@ -624,9 +657,9 @@ Package: todonotes 2012/07/25
 Package: xkeyval 2012/10/14 v2.6b package option processing (HA)
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xkeyval\xkeyval.tex"
-\XKV@toks=\toks23
-\XKV@tempa@toks=\toks24
-\XKV@depth=\count229
+\XKV@toks=\toks27
+\XKV@tempa@toks=\toks28
+\XKV@depth=\count278
 File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
 ))
 ("H:\Application Data\MiKTeX\2.9\tex\latex\xcolor\xcolor.sty"
@@ -650,14 +683,14 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 ("H:\Application Data\MiKTeX\2.9\tex\latex\pgf\basiclayer\pgf.sty"
 ("H:\Application Data\MiKTeX\2.9\tex\latex\pgf\utilities\pgfrcs.sty"
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\utilities\pgfutil-common.tex"
-\pgfutil@everybye=\toks25
-\pgfutil@tempdima=\dimen126
-\pgfutil@tempdimb=\dimen127
+\pgfutil@everybye=\toks29
+\pgfutil@tempdima=\dimen128
+\pgfutil@tempdimb=\dimen129
 
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\utilities\pgfutil-common-lists
 .tex"))
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\utilities\pgfutil-latex.def"
-\pgfutil@abb=\box30
+\pgfutil@abb=\box32
 
 ("H:\Application Data\MiKTeX\2.9\tex\latex\ms\everyshi.sty"
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
@@ -673,30 +706,30 @@ Package: pgf 2015/08/07 v3.0.1a (rcs-revision 1.15)
 Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\utilities\pgfkeys.code.tex"
-\pgfkeys@pathtoks=\toks26
-\pgfkeys@temptoks=\toks27
+\pgfkeys@pathtoks=\toks30
+\pgfkeys@temptoks=\toks31
 
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\utilities\pgfkeysfiltered.code
 .tex"
-\pgfkeys@tmptoks=\toks28
+\pgfkeys@tmptoks=\toks32
 ))
-\pgf@x=\dimen128
-\pgf@y=\dimen129
-\pgf@xa=\dimen130
-\pgf@ya=\dimen131
-\pgf@xb=\dimen132
-\pgf@yb=\dimen133
-\pgf@xc=\dimen134
-\pgf@yc=\dimen135
+\pgf@x=\dimen130
+\pgf@y=\dimen131
+\pgf@xa=\dimen132
+\pgf@ya=\dimen133
+\pgf@xb=\dimen134
+\pgf@yb=\dimen135
+\pgf@xc=\dimen136
+\pgf@yc=\dimen137
 \w@pgf@writea=\write4
 \r@pgf@reada=\read2
-\c@pgf@counta=\count230
-\c@pgf@countb=\count231
-\c@pgf@countc=\count232
-\c@pgf@countd=\count233
-\t@pgf@toka=\toks29
-\t@pgf@tokb=\toks30
-\t@pgf@tokc=\toks31
+\c@pgf@counta=\count279
+\c@pgf@countb=\count280
+\c@pgf@countc=\count281
+\c@pgf@countd=\count282
+\t@pgf@toka=\toks33
+\t@pgf@tokb=\toks34
+\t@pgf@tokc=\toks35
  ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgf.cfg"
 File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
 )
@@ -712,9 +745,8 @@ File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsyssoftpath.cod
 e.tex"
 File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
-Normal \count register pool exhausted, switching to extended pool.
-\pgfsyssoftpath@smallbuffer@items=\count277
-\pgfsyssoftpath@bigbuffer@items=\count278
+\pgfsyssoftpath@smallbuffer@items=\count283
+\pgfsyssoftpath@bigbuffer@items=\count284
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsysprotocol.cod
 e.tex"
@@ -727,12 +759,12 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\math\pgfmathcalc.code.tex"
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\math\pgfmathutil.code.tex")
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\math\pgfmathparser.code.tex"
-\pgfmath@dimen=\dimen136
-\pgfmath@count=\count279
-\pgfmath@box=\box31
-\pgfmath@toks=\toks32
-\pgfmath@stack@operand=\toks33
-\pgfmath@stack@operation=\toks34
+\pgfmath@dimen=\dimen138
+\pgfmath@count=\count285
+\pgfmath@box=\box33
+\pgfmath@toks=\toks36
+\pgfmath@stack@operand=\toks37
+\pgfmath@stack@operation=\toks38
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunctions.code.tex
 "
@@ -753,57 +785,57 @@ e.tex")
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunctions.integera
 rithmetics.code.tex")))
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfloat.code.tex"
-\c@pgfmathroundto@lastzeros=\count280
+\c@pgfmathroundto@lastzeros=\count286
 ))
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepoints.code.
 tex"
 File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
-\pgf@picminx=\dimen137
-\pgf@picmaxx=\dimen138
-\pgf@picminy=\dimen139
-\pgf@picmaxy=\dimen140
-\pgf@pathminx=\dimen141
-\pgf@pathmaxx=\dimen142
-\pgf@pathminy=\dimen143
-\pgf@pathmaxy=\dimen144
-\pgf@xx=\dimen145
-\pgf@xy=\dimen146
-\pgf@yx=\dimen147
-\pgf@yy=\dimen148
-\pgf@zx=\dimen149
-\pgf@zy=\dimen150
+\pgf@picminx=\dimen139
+\pgf@picmaxx=\dimen140
+\pgf@picminy=\dimen141
+\pgf@picmaxy=\dimen142
+\pgf@pathminx=\dimen143
+\pgf@pathmaxx=\dimen144
+\pgf@pathminy=\dimen145
+\pgf@pathmaxy=\dimen146
+\pgf@xx=\dimen147
+\pgf@xy=\dimen148
+\pgf@yx=\dimen149
+\pgf@yy=\dimen150
+\pgf@zx=\dimen151
+\pgf@zy=\dimen152
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepathconstruc
 t.code.tex"
 File: pgfcorepathconstruct.code.tex 2013/10/07  (rcs-revision 1.29)
-\pgf@path@lastx=\dimen151
-\pgf@path@lasty=\dimen152
+\pgf@path@lastx=\dimen153
+\pgf@path@lasty=\dimen154
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepathusage.co
 de.tex"
 File: pgfcorepathusage.code.tex 2014/11/02  (rcs-revision 1.24)
-\pgf@shorten@end@additional=\dimen153
-\pgf@shorten@start@additional=\dimen154
+\pgf@shorten@end@additional=\dimen155
+\pgf@shorten@start@additional=\dimen156
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorescopes.code.
 tex"
 File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
-\pgfpic=\box32
-\pgf@hbox=\box33
-\pgf@layerbox@main=\box34
-\pgf@picture@serial@count=\count281
+\pgfpic=\box34
+\pgf@hbox=\box35
+\pgf@layerbox@main=\box36
+\pgf@picture@serial@count=\count287
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoregraphicstate
 .code.tex"
 File: pgfcoregraphicstate.code.tex 2014/11/02  (rcs-revision 1.12)
-\pgflinewidth=\dimen155
+\pgflinewidth=\dimen157
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoretransformati
 ons.code.tex"
 File: pgfcoretransformations.code.tex 2015/08/07  (rcs-revision 1.20)
-\pgf@pt@x=\dimen156
-\pgf@pt@y=\dimen157
-\pgf@pt@temp=\dimen158
+\pgf@pt@x=\dimen158
+\pgf@pt@y=\dimen159
+\pgf@pt@temp=\dimen160
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorequick.code.t
 ex"
@@ -820,13 +852,13 @@ File: pgfcorepathprocessing.code.tex 2013/09/09  (rcs-revision 1.9)
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorearrows.code.
 tex"
 File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
-\pgfarrowsep=\dimen159
+\pgfarrowsep=\dimen161
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoreshade.code.t
 ex"
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
-\pgf@max=\dimen160
-\pgf@sys@shading@range@num=\count282
+\pgf@max=\dimen162
+\pgf@sys@shading@range@num=\count288
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoreimage.code.t
 ex"
@@ -835,7 +867,7 @@ File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoreexternal.cod
 e.tex"
 File: pgfcoreexternal.code.tex 2014/07/09  (rcs-revision 1.21)
-\pgfexternal@startupbox=\box35
+\pgfexternal@startupbox=\box37
 ))
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorelayers.code.
 tex"
@@ -852,7 +884,7 @@ File: pgfcorepatterns.code.tex 2013/11/07  (rcs-revision 1.5)
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\modules\pgfmoduleshapes.code.t
 ex"
 File: pgfmoduleshapes.code.tex 2014/03/21  (rcs-revision 1.35)
-\pgfnodeparttextbox=\box36
+\pgfnodeparttextbox=\box38
 )
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\modules\pgfmoduleplot.code.tex
 "
@@ -861,8 +893,8 @@ File: pgfmoduleplot.code.tex 2015/08/03  (rcs-revision 1.13)
 ("H:\Application Data\MiKTeX\2.9\tex\latex\pgf\compatibility\pgfcomp-version-0-
 65.sty"
 Package: pgfcomp-version-0-65 2007/07/03 v3.0.1a (rcs-revision 1.7)
-\pgf@nodesepstart=\dimen161
-\pgf@nodesepend=\dimen162
+\pgf@nodesepstart=\dimen163
+\pgf@nodesepend=\dimen164
 )
 ("H:\Application Data\MiKTeX\2.9\tex\latex\pgf\compatibility\pgfcomp-version-1-
 18.sty"
@@ -876,10 +908,10 @@ Package: pgfcomp-version-1-18 2007/07/23 v3.0.1a (rcs-revision 1.1)
 Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
 
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\math\pgfmath.code.tex")
-\pgffor@iter=\dimen163
-\pgffor@skip=\dimen164
-\pgffor@stack=\toks35
-\pgffor@toks=\toks36
+\pgffor@iter=\dimen165
+\pgffor@skip=\dimen166
+\pgffor@stack=\toks39
+\pgffor@toks=\toks40
 ))
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\frontendlayer\tikz\tikz.code.t
 ex"
@@ -888,32 +920,32 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\libraries\pgflibraryplothandle
 rs.code.tex"
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
-\pgf@plot@mark@count=\count283
-\pgfplotmarksize=\dimen165
+\pgf@plot@mark@count=\count289
+\pgfplotmarksize=\dimen167
 )
-\tikz@lastx=\dimen166
-\tikz@lasty=\dimen167
-\tikz@lastxsaved=\dimen168
-\tikz@lastysaved=\dimen169
-\tikzleveldistance=\dimen170
-\tikzsiblingdistance=\dimen171
-\tikz@figbox=\box37
-\tikz@figbox@bg=\box38
-\tikz@tempbox=\box39
-\tikz@tempbox@bg=\box40
-\tikztreelevel=\count284
-\tikznumberofchildren=\count285
-\tikznumberofcurrentchild=\count286
-\tikz@fig@count=\count287
+\tikz@lastx=\dimen168
+\tikz@lasty=\dimen169
+\tikz@lastxsaved=\dimen170
+\tikz@lastysaved=\dimen171
+\tikzleveldistance=\dimen172
+\tikzsiblingdistance=\dimen173
+\tikz@figbox=\box39
+\tikz@figbox@bg=\box40
+\tikz@tempbox=\box41
+\tikz@tempbox@bg=\box42
+\tikztreelevel=\count290
+\tikznumberofchildren=\count291
+\tikznumberofcurrentchild=\count292
+\tikz@fig@count=\count293
 
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\modules\pgfmodulematrix.code.t
 ex"
 File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
-\pgfmatrixcurrentrow=\count288
-\pgfmatrixcurrentcolumn=\count289
-\pgf@matrix@numberofcolumns=\count290
+\pgfmatrixcurrentrow=\count294
+\pgfmatrixcurrentcolumn=\count295
+\pgf@matrix@numberofcolumns=\count296
 )
-\tikz@expandcount=\count291
+\tikz@expandcount=\count297
 
 ("H:\Application Data\MiKTeX\2.9\tex\generic\pgf\frontendlayer\tikz\libraries\t
 ikzlibrarytopaths.code.tex"
@@ -925,18 +957,18 @@ File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.1a (rcs-revision 1.7)
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\calc.sty"
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count292
-\calc@Bcount=\count293
-\calc@Adimen=\dimen172
-\calc@Bdimen=\dimen173
-\calc@Askip=\skip55
-\calc@Bskip=\skip56
+\calc@Acount=\count298
+\calc@Bcount=\count299
+\calc@Adimen=\dimen174
+\calc@Bdimen=\dimen175
+\calc@Askip=\skip59
+\calc@Bskip=\skip60
 LaTeX Info: Redefining \setlength on input line 76.
 LaTeX Info: Redefining \addtolength on input line 77.
-\calc@Ccount=\count294
-\calc@Cskip=\skip57
+\calc@Ccount=\count300
+\calc@Cskip=\skip61
 )
-\c@@todonotes@numberoftodonotes=\count295
+\c@@todonotes@numberoftodonotes=\count301
 )
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
@@ -948,35 +980,38 @@ File: english.lbx 2015/10/21 v3.1 biblatex localization (PK/JW/AB)
 Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 (biblatex)                Loading 'csquotes' recommended.
 
-\@quotelevel=\count296
-\@quotereset=\count297
-(\\mtucifs3.iso.mtu.edu\home\Documents\dsp\report_lab06\main.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
+\@quotelevel=\count302
+\@quotereset=\count303
+(\\mtucifs3.iso.mtu.edu\home\Documents\dsp\report_lab06\main.aux
 
-("H:\Application Data\MiKTeX\2.9\tex\context\base\supp-pdf.mkii"
+LaTeX Warning: Label `eq:resolution' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+ ("H:\Application Data\MiKTeX\2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count298
-\scratchdimen=\dimen174
-\scratchbox=\box41
-\nofMPsegments=\count299
-\nofMParguments=\count300
-\everyMPshowfont=\toks37
-\MPscratchCnt=\count301
-\MPscratchDim=\dimen175
-\MPnumerator=\count302
-\makeMPintoPDFobject=\count303
-\everyMPtoPDFconversion=\toks38
+\scratchcounter=\count304
+\scratchdimen=\dimen176
+\scratchbox=\box43
+\nofMPsegments=\count305
+\nofMParguments=\count306
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count307
+\MPscratchDim=\dimen177
+\MPnumerator=\count308
+\makeMPintoPDFobject=\count309
+\everyMPtoPDFconversion=\toks42
 )
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
@@ -989,65 +1024,60 @@ Package biblatex Warning: Data encoding is 'utf8'.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
 (\\mtucifs3.iso.mtu.edu\home\Documents\dsp\report_lab06\main.bbl)
-Package biblatex Info: Reference section=0 on input line 24.
-Package biblatex Info: Reference segment=0 on input line 24.
-\c@lstlisting=\count304
+Package biblatex Info: Reference section=0 on input line 27.
+Package biblatex Info: Reference segment=0 on input line 27.
+\c@lstlisting=\count310
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 ABD: EveryShipout initializing macros
-LaTeX Font Info:    Try loading font information for U+msa on input line 25.
+LaTeX Font Info:    Try loading font information for U+msa on input line 28.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 25.
+LaTeX Font Info:    Try loading font information for U+msb on input line 28.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 38--38
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 38--38
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 38--38
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 38--38
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-LaTeX Warning: Marginpar on page 1 moved.
-
-
-LaTeX Warning: Marginpar on page 1 moved.
-
-
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 45--45
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 45--45
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 45--45
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 45--45
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
@@ -1057,33 +1087,42 @@ LaTeX Warning: Marginpar on page 1 moved.
 
 LaTeX Warning: Marginpar on page 1 moved.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 56.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 85.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 85.
  [1{C:/Users/garamizo/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
 ]
-<img/sample.png, id=15, 281.55188pt x 216.05719pt>
+
+LaTeX Warning: Marginpar on page 2 moved.
+
+
+LaTeX Warning: Marginpar on page 2 moved.
+
+
+Underfull \hbox (badness 1043) in paragraph at lines 105--106
+\OT1/cmr/m/n/10 cap-ture $32$ blocks of $476$ sam-ples, mea-sured at
+ []
+
+<img/sample.png, id=17, 281.55188pt x 216.05719pt>
 File: img/sample.png Graphic file (type png)
  <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 76.
+Package pdftex.def Info: img/sample.png used on input line 120.
 (pdftex.def)             Requested size: 183.6007pt x 140.89044pt.
 
 [2 <//mtucifs3.iso.mtu.edu/home/Documents/dsp/report_lab06/img/sample.png>]
-[3
-
-]
+[3]
 File: img/sample.png Graphic file (type png)
  <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 119.
+Package pdftex.def Info: img/sample.png used on input line 163.
 (pdftex.def)             Requested size: 281.40286pt x 215.95773pt.
 File: img/sample.png Graphic file (type png)
  <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 127.
+Package pdftex.def Info: img/sample.png used on input line 171.
 (pdftex.def)             Requested size: 281.40286pt x 215.95773pt.
 
 
@@ -1091,7 +1130,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 File: img/sample.png Graphic file (type png)
 <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 135.
+Package pdftex.def Info: img/sample.png used on input line 179.
 (pdftex.def)             Requested size: 281.40286pt x 215.95773pt.
 
 
@@ -1130,18 +1169,18 @@ Underfull \vbox (badness 2261) has occurred while \output is active []
 ]
 [9]) [10] (\\mtucifs3.iso.mtu.edu\home\Documents\dsp\report_lab06\main.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
- 21458 strings out of 493921
- 389686 string characters out of 3144909
- 703083 words of memory out of 3000000
- 24400 multiletter control sequences out of 15000+200000
+ 21763 strings out of 493921
+ 393938 string characters out of 3144909
+ 704602 words of memory out of 3000000
+ 24692 multiletter control sequences out of 15000+200000
  12617 words of font info for 49 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 62i,9n,76p,825b,2172s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 62i,10n,76p,825b,2171s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:
@@ -1151,13 +1190,14 @@ ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program
  Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fi
 les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files
  (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x8
-6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (10 pages, 204607 bytes).
+6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on main.pdf (10 pages, 221337 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
+ 95 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
