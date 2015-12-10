@@ -95,6 +95,20 @@ function [blocksize, noc] = optimize_blocksize(F0, Fs, noc_range, Fmin)
     end
 end
 
+function rpm = speed_from_tach(time, tach)
+   
+    len = length(tach);
+    tach = reshape(tach, [len 1]);
+    
+    thres = (prctile(tach, 75) - prctile(tach, 25))*0.65;
+    trigger = [false; tach(2:end) - tach(1:end-1) > thres];
+    time_rising = time(trigger);
+    w = 2*pi./(time_rising(2:end) - time_rising(1:end-1));
+    w = [w; w(end)];
+    
+    rpm = interp1(time(trigger), w, time, 'linear', 'extrap') * 60/(2*pi);
+end
+
 end
 end
 

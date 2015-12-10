@@ -79,7 +79,11 @@ function [blocksize, noc] = optimize_blocksize(F0, Fs, noc_range, Fmin)
     
     nocs = noc_range(1) : noc_range(2);
     approx_blocksizes = nocs * Fs/F0;
+    % disregard too small block sizes
     approx_blocksizes(approx_blocksizes < min_blocksize) = [];
+    if isempty(approx_blocksizes)
+        error('Slower component do not fit window choices')
+    end
     blocksizes = round(approx_blocksizes);
     
     [err, idx] = min(abs(approx_blocksizes - blocksizes));
@@ -89,6 +93,20 @@ function [blocksize, noc] = optimize_blocksize(F0, Fs, noc_range, Fmin)
     if err > 1e-3
         warning(['Bad block size. Round error: ' num2str(err)])
     end
+end
+
+function rpm = speed_from_tach(time, tach)
+   
+    len = length(tach);
+    tach = reshape(tach, [len 1]);
+    
+    thres = (prctile(tach, 80) - prctile(tach, 20))*0.8;
+    trigger = [false; tach(2:end) - tach(1:end-1) > thres];
+    time_rising = time(trigger);
+    w = 2*pi./(time_rising(2:end) - time_rising(1:end-1));
+    w = [w; w(end)];
+    
+    rpm = interp1(time(trigger), w, time, 'linear', 'extrap') * 60/(2*pi);
 end
 
 end
