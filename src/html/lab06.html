@@ -1,0 +1,533 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>DSP - Laboratory #6</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-12-10"><meta name="DC.source" content="lab06.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>DSP - Laboratory #6</h1><!--introduction--><p>Guilherme Aramizo Ribeiro</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Definitions</a></li><li><a href="#2">Getting calibration factor</a></li><li><a href="#3">Set #1</a></li><li><a href="#4">1)</a></li><li><a href="#5">Set #2, #3, #4</a></li><li><a href="#6">2) Tachometer</a></li><li><a href="#7">3) Color map</a></li><li><a href="#8">4) Order tracking</a></li><li><a href="#9">FFT, constant order bandwidth</a></li></ul></div><h2>Definitions<a name="1"></a></h2><p>TODO replace with experimental data</p><pre class="codeinput">rpm_nominal_ = 15000; <span class="comment">% motor operating speed [rpm]</span>
+rpm_min_ = rpm_nominal_ / 5;
+acc_sens_ = 3/(9.81*sqrt(2)); <span class="comment">% V/(m/s^2)</span>
+rot_unbalance_ = [1e-3 1e-4 3.5e-4 2e-5];
+orders_ = [1 2 5 7];
+motor_func_ = @(t,w) sum(bsxfun(@times, orders_.*sqrt(rot_unbalance_), w).^2 .* <span class="keyword">...</span>
+    sin(bsxfun(@plus, 2*pi*bsxfun(@times, orders_, w.*t), rand(size(orders_)))), 2);
+</pre><h2>Getting calibration factor<a name="2"></a></h2><p>Calibrating a signal     Input frequency range: [Fmin Fmax] = [149.2 149.2] Hz     Input voltage range: [Vmin Vmax] = ?</p><pre>   Fs = 13.1072e6/(256*31) &gt; 300 Hz = 2*Fmax
+   winsize = 476, minimize leakage
+   noavg = 32</pre><pre class="codeinput"><span class="comment">% acquisition parameters</span>
+Fs = 13.1072e6/(256*31);
+winsize = 476;
+noavg = 32;
+range = 5;
+bits = 24;
+
+<span class="comment">% TODO replace with experimental data</span>
+<span class="comment">% Simulate signal</span>
+<span class="comment">% time = linspace(0, (winsize*(noavg+2))/Fs, winsize*(noavg+2)).';</span>
+<span class="comment">% y = myDSP.discretize( ...</span>
+<span class="comment">%     (9.81*sqrt(2))*acc_sens_*sin(2*pi*149.2*time), bits, range);</span>
+data = dlmread(<span class="string">'../report_lab06/data/calib.csv'</span>, <span class="string">'\t'</span>);
+time = data(:,1);
+y = data(:,2);
+
+<span class="comment">%{
+</span><span class="comment">plot(time*1e3, y, 'o-')
+</span><span class="comment">xlim([0 30])
+</span><span class="comment">xlabel('time [ms]'); ylabel('acc voltage [V]')
+</span><span class="comment">%}
+</span>
+<span class="comment">% Visualize auto-power</span>
+yreshaped = myDSP.reshape(y, winsize, 0);
+
+win = window(@flattopwin, winsize);
+gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+Gyy = squeeze(mean(conj(GY) .* GY, 2));
+
+f = linspace(0, Fs, winsize);
+
+figure
+subplot(211); semilogy(f, sqrt(Gyy)); grid <span class="string">on</span>; grid <span class="string">minor</span>
+xlim([0 Fs/2]); xlabel(<span class="string">'frequency [Hz]'</span>)
+subplot(212); plot(time*1e3, y, <span class="string">'o-'</span>); xlabel(<span class="string">'time [s]'</span>); xlim([0 30])
+
+calib_factor = (9.81*sqrt(2))/0.03417; <span class="comment">% Calibration factor [(m/s^2)/V]</span>
+</pre><img vspace="5" hspace="5" src="lab06_01.png" alt=""> <h2>Set #1<a name="3"></a></h2><pre class="codeinput"><span class="comment">% Steady state 0.5*rpm speed</span>
+<span class="comment">%     Input frequency range: 10th order of the nominal speed</span>
+<span class="comment">%     Input voltage range: [Vmin Vmax] = ?</span>
+<span class="comment">%</span>
+<span class="comment">%     Fs = 10240 = 13.1072e6/(256*5) &gt; 2*Fmax = 2*(10*(rpm_nominal_/60))</span>
+<span class="comment">%     winsize = 40960 = Fs/0.25, df = Fs/winsize = 0.25</span>
+<span class="comment">%     noavg = 50</span>
+
+<span class="comment">% acquisition parameters</span>
+Fs = 13.1072e6/(256*5);
+winsize = 40960;
+noavg = 50;
+range = 5;
+bits = 24;
+
+<span class="comment">% TODO replace with experimental data</span>
+<span class="comment">% time = linspace(0, (noavg+2)*winsize/Fs, (noavg+2)*winsize).';</span>
+<span class="comment">% rpm = rpm_nominal_ * ones(size(time)) / 2;</span>
+<span class="comment">% tach = square(2*pi*cumsum(rpm/60).*diff([-1/Fs; time])) + randn(size(time))/10;</span>
+<span class="comment">% acc = calib_factor * acc_sens_ * motor_func_(time, rpm/60);</span>
+
+data = dlmread(<span class="string">'../report_lab06/data/ss.csv'</span>, <span class="string">'\t'</span>, 1);
+time = data(:,1) - data(1,1);
+tach = data(:,4);
+acc = data(:,2) * calib_factor;
+
+<span class="comment">%{
+</span><span class="comment">figure
+</span><span class="comment">subplot(311); stairs(time, rpm); xlim([0 30e-3])
+</span><span class="comment">subplot(312); stairs(time, tach); xlim([0 30e-3])
+</span><span class="comment">subplot(313); stairs(time, acc); xlim([0 30e-3])
+</span><span class="comment">%}
+</span>
+yreshaped = myDSP.reshape(acc, winsize, 0);
+yreshaped(:,[1 end]) = []; <span class="comment">% remove head and tail</span>
+
+win = window(@hann, winsize);
+
+gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+Gyy = squeeze(mean(conj(GY) .* GY, 2));
+
+f = linspace(0, Fs, winsize);
+
+figure
+semilogy(f, sqrt(Gyy)); grid <span class="string">on</span>; grid <span class="string">minor</span>
+xlim([0 Fs/2]); xlabel(<span class="string">'frequency [Hz]'</span>); ylabel(<span class="string">'base acceleration [m/s^2]'</span>)
+</pre><pre class="codeoutput">Warning: Obsolete syntax. C must be specified with R. 
+</pre><img vspace="5" hspace="5" src="lab06_02.png" alt=""> <h2>1)<a name="4"></a></h2><pre class="codeinput">avg_rpm = mean(myDSP.speed_from_tach(time, tach)); <span class="comment">% Average RPM</span>
+</pre><h2>Set #2, #3, #4<a name="5"></a></h2><pre class="codeinput"><span class="comment">% Transient: 0-&gt;45s, 0-&gt;20s, 0-&gt;10s, ranging full rpm bounds</span>
+<span class="comment">%     Input frequency range: 10th order of nominal speed</span>
+<span class="comment">%     Input voltage range: [Vmin Vmax] = ?</span>
+<span class="comment">%</span>
+<span class="comment">%     Fs = 10240 = 13.1072e6/(256*5) &gt; 2*Fmax = 2*(10*(rpm_nominal_/60))</span>
+<span class="comment">%     winsize = 40960 = Fs/0.25, df = Fs/winsize = 0.25</span>
+<span class="comment">%     noavg = 50</span>
+
+<span class="comment">% acquisition parameters</span>
+Fs = 13.1072e6/(256*5);
+len = 45*Fs;
+<span class="comment">% winsize = 40960;</span>
+<span class="comment">% noavg = 50;</span>
+range = 5;
+bits = 24;
+
+<span class="comment">% time = linspace(0, round(len*1.1)/Fs, round(len*1.1)).';</span>
+<span class="comment">%</span>
+<span class="comment">% rpm_ = ones(size(time, 1), 3) * rpm_nominal_;</span>
+<span class="comment">% rpm_(time &lt; 45, 1) = rpm_min_ + time(time &lt; 45)*(rpm_nominal_-rpm_min_)/45;</span>
+<span class="comment">% rpm_(time &lt; 20, 2) = rpm_min_ + time(time &lt; 20)*(rpm_nominal_-rpm_min_)/20;</span>
+<span class="comment">% rpm_(time &lt; 10, 3) = rpm_min_ + time(time &lt; 10)*(rpm_nominal_-rpm_min_)/10;</span>
+<span class="comment">%</span>
+<span class="comment">% tach = square(2*pi*bsxfun(@times, cumsum(rpm_/60), diff([-1/Fs; time])));</span>
+<span class="comment">%</span>
+<span class="comment">% acc = calib_factor * acc_sens_ * [motor_func_(time, rpm_(:,1)/60), ...</span>
+<span class="comment">%     motor_func_(time, rpm_(:,2)/60), motor_func_(time, rpm_(:,3)/60)];</span>
+
+data1 = dlmread(<span class="string">'../report_lab06/data/slow3.csv'</span>, <span class="string">'\t'</span>, 1);
+data2 = dlmread(<span class="string">'../report_lab06/data/mid2.csv'</span>, <span class="string">'\t'</span>, 1);
+data3 = dlmread(<span class="string">'../report_lab06/data/fast2.csv'</span>, <span class="string">'\t'</span>, 1);
+
+len = max([size(data1,1), size(data2,1), size(data3,1)]);
+time = (1:len).'/Fs;
+
+tach = zeros(len, 3);
+acc = zeros(len, 3);
+
+tach(1:size(data1,1),1) = data1(:,4);
+tach(1:size(data2,1),2) = data2(:,4);
+tach(1:size(data3,1),3) = data3(:,4);
+
+acc(1:size(data1,1),1) = data1(:,2) * calib_factor;
+acc(1:size(data2,1),2) = data2(:,2) * calib_factor;
+acc(1:size(data3,1),3) = data3(:,2) * calib_factor;
+
+plot(time, tach)
+</pre><pre class="codeoutput">Warning: Obsolete syntax. C must be specified with R. 
+Warning: Obsolete syntax. C must be specified with R. 
+Warning: Obsolete syntax. C must be specified with R. 
+</pre><img vspace="5" hspace="5" src="lab06_03.png" alt=""> <h2>2) Tachometer<a name="6"></a></h2><pre class="codeinput">rpm = [myDSP.speed_from_tach(time, tach(:,1)), myDSP.speed_from_tach(time, tach(:,2)), <span class="keyword">...</span>
+    myDSP.speed_from_tach(time, tach(:,3))];
+
+plot(time, rpm); grid <span class="string">on</span>; grid <span class="string">minor</span>
+xlabel(<span class="string">'frequency [Hz]'</span>); ylabel(<span class="string">'Shaft speed [RPM]'</span>); ylim([0 5000])
+</pre><img vspace="5" hspace="5" src="lab06_04.png" alt=""> <h2>3) Color map<a name="7"></a></h2><pre class="codeinput">noblocks = 100;
+
+time_range = [45 20 10];
+<span class="keyword">for</span> k = 1 : 3
+    winsize = round((Fs*time_range(k))/noblocks); <span class="comment">% 100 evenly spaced RPM bins</span>
+    y = acc(:, k);
+
+    yreshaped = myDSP.reshape(y, winsize, 0);
+    yreshaped = yreshaped(:,(1:noblocks) + 1); <span class="comment">% remove head and tail</span>
+
+    win = window(@hann, winsize);
+
+    gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+    GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+    Gyy = filter(ones(1,5)/5, 1, conj(GY) .* GY, [], 2);
+
+    f = linspace(0, Fs, winsize);
+    [freqs, rpms] = meshgrid(f, linspace(rpm_min_, rpm_nominal_, 100));
+    accs = sqrt(Gyy).';
+
+    figure;
+    surf(freqs, rpms, accs, <span class="string">'EdgeColor'</span>,<span class="string">'None'</span>);
+    view(2); xlim([0 Fs/2]); ylim([rpm_min_, rpm_nominal_])
+    colorbar; xlabel(<span class="string">'Frequency [Hz]'</span>); ylabel(<span class="string">'shaft speed [RPM]'</span>)
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="lab06_05.png" alt=""> <img vspace="5" hspace="5" src="lab06_06.png" alt=""> <img vspace="5" hspace="5" src="lab06_07.png" alt=""> <h2>4) Order tracking<a name="8"></a></h2><h2>FFT, constant order bandwidth<a name="9"></a></h2><pre class="codeinput">noblocks = 100;
+
+time_range = [45 20 10];
+<span class="keyword">for</span> k = 1 : 3
+    winsize = round((Fs*time_range(k))/noblocks); <span class="comment">% 100 evenly spaced RPM bins</span>
+
+    angle = cumsum(rpm(time&lt;time_range(k),k)*(2*pi/60));
+    R = angle(end) / noblocks;
+
+    angle = cumsum(rpm(:,k)*(2*pi/60));
+    RR = angle(end) / noblocks;
+
+    xx = cumsum(rpm(:,k));
+    xx = xx * t(end)/xx(end);
+    y = interp1(time, acc(:, k), xx);
+
+    yreshaped = myDSP.reshape(y, winsize, 0);
+    yreshaped = yreshaped(:,(1:noblocks) + 1); <span class="comment">% remove head and tail</span>
+
+    win = window(@hann, winsize);
+
+    gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+    GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+    Gyy = filter(ones(1,5)/5, 1, conj(GY) .* GY, [], 2);
+
+    f = linspace(0, winsize/R, winsize);
+    [freqs, rpms] = meshgrid(f, linspace(rpm_min_, rpm_nominal_, 100));
+    accs = sqrt(Gyy).';
+
+    figure;
+    surf(freqs, rpms, accs, <span class="string">'EdgeColor'</span>,<span class="string">'None'</span>);
+    view(2); ylim([rpm_min_, rpm_nominal_])
+    colorbar; xlabel(<span class="string">'Frequency [Hz]'</span>); ylabel(<span class="string">'shaft speed [RPM]'</span>)
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="lab06_08.png" alt=""> <img vspace="5" hspace="5" src="lab06_09.png" alt=""> <img vspace="5" hspace="5" src="lab06_10.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% DSP - Laboratory #6
+% Guilherme Aramizo Ribeiro
+%% Definitions
+% TODO replace with experimental data
+rpm_nominal_ = 15000; % motor operating speed [rpm]
+rpm_min_ = rpm_nominal_ / 5;
+acc_sens_ = 3/(9.81*sqrt(2)); % V/(m/s^2)
+rot_unbalance_ = [1e-3 1e-4 3.5e-4 2e-5];
+orders_ = [1 2 5 7];
+motor_func_ = @(t,w) sum(bsxfun(@times, orders_.*sqrt(rot_unbalance_), w).^2 .* ...
+    sin(bsxfun(@plus, 2*pi*bsxfun(@times, orders_, w.*t), rand(size(orders_)))), 2);
+
+%% Getting calibration factor
+% Calibrating a signal
+%     Input frequency range: [Fmin Fmax] = [149.2 149.2] Hz
+%     Input voltage range: [Vmin Vmax] = ?
+% 
+%     Fs = 13.1072e6/(256*31) > 300 Hz = 2*Fmax
+%     winsize = 476, minimize leakage
+%     noavg = 32
+
+% acquisition parameters
+Fs = 13.1072e6/(256*31);
+winsize = 476;
+noavg = 32;
+range = 5;
+bits = 24;
+
+% TODO replace with experimental data
+% Simulate signal
+% time = linspace(0, (winsize*(noavg+2))/Fs, winsize*(noavg+2)).';
+% y = myDSP.discretize( ...
+%     (9.81*sqrt(2))*acc_sens_*sin(2*pi*149.2*time), bits, range);
+data = dlmread('../report_lab06/data/calib.csv', '\t');
+time = data(:,1);
+y = data(:,2);
+
+%{
+plot(time*1e3, y, 'o-')
+xlim([0 30])
+xlabel('time [ms]'); ylabel('acc voltage [V]')
+%}
+
+% Visualize auto-power
+yreshaped = myDSP.reshape(y, winsize, 0);
+
+win = window(@flattopwin, winsize);
+gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+Gyy = squeeze(mean(conj(GY) .* GY, 2));
+
+f = linspace(0, Fs, winsize);
+
+figure
+subplot(211); semilogy(f, sqrt(Gyy)); grid on; grid minor
+xlim([0 Fs/2]); xlabel('frequency [Hz]')
+subplot(212); plot(time*1e3, y, 'o-'); xlabel('time [s]'); xlim([0 30])
+
+calib_factor = (9.81*sqrt(2))/0.03417; % Calibration factor [(m/s^2)/V]
+
+%% Set #1
+
+% Steady state 0.5*rpm speed
+%     Input frequency range: 10th order of the nominal speed
+%     Input voltage range: [Vmin Vmax] = ?
+% 
+%     Fs = 10240 = 13.1072e6/(256*5) > 2*Fmax = 2*(10*(rpm_nominal_/60))
+%     winsize = 40960 = Fs/0.25, df = Fs/winsize = 0.25
+%     noavg = 50
+
+% acquisition parameters
+Fs = 13.1072e6/(256*5);
+winsize = 40960;
+noavg = 50;
+range = 5;
+bits = 24;
+
+% TODO replace with experimental data
+% time = linspace(0, (noavg+2)*winsize/Fs, (noavg+2)*winsize).';
+% rpm = rpm_nominal_ * ones(size(time)) / 2;
+% tach = square(2*pi*cumsum(rpm/60).*diff([-1/Fs; time])) + randn(size(time))/10;
+% acc = calib_factor * acc_sens_ * motor_func_(time, rpm/60);
+
+data = dlmread('../report_lab06/data/ss.csv', '\t', 1);
+time = data(:,1) - data(1,1);
+tach = data(:,4);
+acc = data(:,2) * calib_factor;
+
+%{
+figure
+subplot(311); stairs(time, rpm); xlim([0 30e-3])
+subplot(312); stairs(time, tach); xlim([0 30e-3])
+subplot(313); stairs(time, acc); xlim([0 30e-3])
+%}
+    
+yreshaped = myDSP.reshape(acc, winsize, 0);
+yreshaped(:,[1 end]) = []; % remove head and tail
+
+win = window(@hann, winsize);
+
+gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+Gyy = squeeze(mean(conj(GY) .* GY, 2));
+
+f = linspace(0, Fs, winsize);
+
+figure
+semilogy(f, sqrt(Gyy)); grid on; grid minor
+xlim([0 Fs/2]); xlabel('frequency [Hz]'); ylabel('base acceleration [m/s^2]')
+
+%% 1)
+avg_rpm = mean(myDSP.speed_from_tach(time, tach)); % Average RPM
+
+%% Set #2, #3, #4
+
+% Transient: 0->45s, 0->20s, 0->10s, ranging full rpm bounds
+%     Input frequency range: 10th order of nominal speed
+%     Input voltage range: [Vmin Vmax] = ?
+% 
+%     Fs = 10240 = 13.1072e6/(256*5) > 2*Fmax = 2*(10*(rpm_nominal_/60))
+%     winsize = 40960 = Fs/0.25, df = Fs/winsize = 0.25
+%     noavg = 50
+
+% acquisition parameters
+Fs = 13.1072e6/(256*5);
+len = 45*Fs;
+% winsize = 40960;
+% noavg = 50;
+range = 5;
+bits = 24;
+
+% time = linspace(0, round(len*1.1)/Fs, round(len*1.1)).';
+% 
+% rpm_ = ones(size(time, 1), 3) * rpm_nominal_;
+% rpm_(time < 45, 1) = rpm_min_ + time(time < 45)*(rpm_nominal_-rpm_min_)/45;
+% rpm_(time < 20, 2) = rpm_min_ + time(time < 20)*(rpm_nominal_-rpm_min_)/20;
+% rpm_(time < 10, 3) = rpm_min_ + time(time < 10)*(rpm_nominal_-rpm_min_)/10;
+% 
+% tach = square(2*pi*bsxfun(@times, cumsum(rpm_/60), diff([-1/Fs; time])));
+% 
+% acc = calib_factor * acc_sens_ * [motor_func_(time, rpm_(:,1)/60), ...
+%     motor_func_(time, rpm_(:,2)/60), motor_func_(time, rpm_(:,3)/60)];
+
+data1 = dlmread('../report_lab06/data/slow3.csv', '\t', 1);
+data2 = dlmread('../report_lab06/data/mid2.csv', '\t', 1);
+data3 = dlmread('../report_lab06/data/fast2.csv', '\t', 1);
+
+len = max([size(data1,1), size(data2,1), size(data3,1)]);
+time = (1:len).'/Fs;
+
+tach = zeros(len, 3);
+acc = zeros(len, 3);
+
+tach(1:size(data1,1),1) = data1(:,4);
+tach(1:size(data2,1),2) = data2(:,4);
+tach(1:size(data3,1),3) = data3(:,4);
+
+acc(1:size(data1,1),1) = data1(:,2) * calib_factor;
+acc(1:size(data2,1),2) = data2(:,2) * calib_factor;
+acc(1:size(data3,1),3) = data3(:,2) * calib_factor;
+
+plot(time, tach)
+
+
+
+%% 2) Tachometer
+rpm = [myDSP.speed_from_tach(time, tach(:,1)), myDSP.speed_from_tach(time, tach(:,2)), ...
+    myDSP.speed_from_tach(time, tach(:,3))];
+
+plot(time, rpm); grid on; grid minor
+xlabel('frequency [Hz]'); ylabel('Shaft speed [RPM]'); ylim([0 5000])
+
+
+%% 3) Color map
+noblocks = 100;
+
+time_range = [45 20 10];
+for k = 1 : 3
+    winsize = round((Fs*time_range(k))/noblocks); % 100 evenly spaced RPM bins
+    y = acc(:, k);
+
+    yreshaped = myDSP.reshape(y, winsize, 0);
+    yreshaped = yreshaped(:,(1:noblocks) + 1); % remove head and tail
+
+    win = window(@hann, winsize);
+
+    gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+    GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+    Gyy = filter(ones(1,5)/5, 1, conj(GY) .* GY, [], 2);
+
+    f = linspace(0, Fs, winsize);
+    [freqs, rpms] = meshgrid(f, linspace(rpm_min_, rpm_nominal_, 100));
+    accs = sqrt(Gyy).';
+
+    figure;
+    surf(freqs, rpms, accs, 'EdgeColor','None');
+    view(2); xlim([0 Fs/2]); ylim([rpm_min_, rpm_nominal_])
+    colorbar; xlabel('Frequency [Hz]'); ylabel('shaft speed [RPM]')
+end
+
+%% 4) Order tracking
+%% FFT, constant order bandwidth
+noblocks = 100;
+
+time_range = [45 20 10];
+for k = 1 : 3
+    winsize = round((Fs*time_range(k))/noblocks); % 100 evenly spaced RPM bins
+    
+    angle = cumsum(rpm(time<time_range(k),k)*(2*pi/60));
+    R = angle(end) / noblocks;
+    
+    angle = cumsum(rpm(:,k)*(2*pi/60));
+    RR = angle(end) / noblocks;
+
+    xx = cumsum(rpm(:,k));
+    xx = xx * t(end)/xx(end);
+    y = interp1(time, acc(:, k), xx);
+
+    yreshaped = myDSP.reshape(y, winsize, 0);
+    yreshaped = yreshaped(:,(1:noblocks) + 1); % remove head and tail
+
+    win = window(@hann, winsize);
+
+    gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+
+    GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+    Gyy = filter(ones(1,5)/5, 1, conj(GY) .* GY, [], 2);
+
+    f = linspace(0, winsize/R, winsize);
+    [freqs, rpms] = meshgrid(f, linspace(rpm_min_, rpm_nominal_, 100));
+    accs = sqrt(Gyy).';
+
+    figure;
+    surf(freqs, rpms, accs, 'EdgeColor','None');
+    view(2); ylim([rpm_min_, rpm_nominal_])
+    colorbar; xlabel('Frequency [Hz]'); ylabel('shaft speed [RPM]')
+end
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

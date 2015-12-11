@@ -28,9 +28,12 @@ bits = 24;
 
 % TODO replace with experimental data
 % Simulate signal
-time = linspace(0, (winsize*(noavg+2))/Fs, winsize*(noavg+2)).';
-y = myDSP.discretize( ...
-    (9.81*sqrt(2))*acc_sens_*sin(2*pi*149.2*time), bits, range);
+% time = linspace(0, (winsize*(noavg+2))/Fs, winsize*(noavg+2)).';
+% y = myDSP.discretize( ...
+%     (9.81*sqrt(2))*acc_sens_*sin(2*pi*149.2*time), bits, range);
+data = dlmread('../report_lab06/data/calib.csv', '\t');
+time = data(:,1);
+y = data(:,2);
 
 %{
 plot(time*1e3, y, 'o-')
@@ -54,7 +57,7 @@ subplot(211); semilogy(f, sqrt(Gyy)); grid on; grid minor
 xlim([0 Fs/2]); xlabel('frequency [Hz]')
 subplot(212); plot(time*1e3, y, 'o-'); xlabel('time [s]'); xlim([0 30])
 
-calib_factor = (9.81*sqrt(2))/3.01; % Calibration factor [(m/s^2)/V]
+calib_factor = (9.81*sqrt(2))/0.03417; % Calibration factor [(m/s^2)/V]
 
 %% Set #1
 
@@ -74,16 +77,21 @@ range = 5;
 bits = 24;
 
 % TODO replace with experimental data
-time = linspace(0, (noavg+2)*winsize/Fs, (noavg+2)*winsize).';
-rpm = rpm_nominal_ * ones(size(time)) / 2;
-tach = square(2*pi*cumsum(rpm/60).*diff([-1/Fs; time])) + randn(size(time))/10;
-acc = calib_factor * acc_sens_ * motor_func_(time, rpm/60);
+% time = linspace(0, (noavg+2)*winsize/Fs, (noavg+2)*winsize).';
+% rpm = rpm_nominal_ * ones(size(time)) / 2;
+% tach = square(2*pi*cumsum(rpm/60).*diff([-1/Fs; time])) + randn(size(time))/10;
+% acc = calib_factor * acc_sens_ * motor_func_(time, rpm/60);
+
+data = dlmread('../report_lab06/data/ss.csv', '\t', 1);
+time = data(:,1) - data(1,1);
+tach = data(:,4);
+acc = data(:,2) * calib_factor;
 
 %{
 figure
-subplot(311); stairs(time, rpm); xlim([0 30e-3])
-subplot(312); stairs(time, tach); xlim([0 30e-3])
-subplot(313); stairs(time, acc); xlim([0 30e-3])
+ax2 = subplot(211); stairs(time, tach); xlim([0 180e-3])
+ax3 = subplot(212); stairs(time, acc); xlim([0 180e-3])
+linkaxes([ax2,ax3],'x')
 %}
     
 yreshaped = myDSP.reshape(acc, winsize, 0);
@@ -123,25 +131,46 @@ len = 45*Fs;
 range = 5;
 bits = 24;
 
-time = linspace(0, round(len*1.1)/Fs, round(len*1.1)).';
+% time = linspace(0, round(len*1.1)/Fs, round(len*1.1)).';
+% 
+% rpm_ = ones(size(time, 1), 3) * rpm_nominal_;
+% rpm_(time < 45, 1) = rpm_min_ + time(time < 45)*(rpm_nominal_-rpm_min_)/45;
+% rpm_(time < 20, 2) = rpm_min_ + time(time < 20)*(rpm_nominal_-rpm_min_)/20;
+% rpm_(time < 10, 3) = rpm_min_ + time(time < 10)*(rpm_nominal_-rpm_min_)/10;
+% 
+% tach = square(2*pi*bsxfun(@times, cumsum(rpm_/60), diff([-1/Fs; time])));
+% 
+% acc = calib_factor * acc_sens_ * [motor_func_(time, rpm_(:,1)/60), ...
+%     motor_func_(time, rpm_(:,2)/60), motor_func_(time, rpm_(:,3)/60)];
 
-rpm_ = ones(size(time, 1), 3) * rpm_nominal_;
-rpm_(time < 45, 1) = rpm_min_ + time(time < 45)*(rpm_nominal_-rpm_min_)/45;
-rpm_(time < 20, 2) = rpm_min_ + time(time < 20)*(rpm_nominal_-rpm_min_)/20;
-rpm_(time < 10, 3) = rpm_min_ + time(time < 10)*(rpm_nominal_-rpm_min_)/10;
+data1 = dlmread('../report_lab06/data/slow3.csv', '\t', 1);
+data2 = dlmread('../report_lab06/data/mid2.csv', '\t', 1);
+data3 = dlmread('../report_lab06/data/fast2.csv', '\t', 1);
 
-tach = square(2*pi*bsxfun(@times, cumsum(rpm_/60), diff([-1/Fs; time])));
+len = max([size(data1,1), size(data2,1), size(data3,1)]);
+time = (1:len).'/Fs;
 
-acc = calib_factor * acc_sens_ * [motor_func_(time, rpm_(:,1)/60), ...
-    motor_func_(time, rpm_(:,2)/60), motor_func_(time, rpm_(:,3)/60)];
+tach = zeros(len, 3);
+acc = zeros(len, 3);
+
+tach(1:size(data1,1),1) = data1(:,4);
+tach(1:size(data2,1),2) = data2(:,4);
+tach(1:size(data3,1),3) = data3(:,4);
+
+acc(1:size(data1,1),1) = data1(:,2) * calib_factor;
+acc(1:size(data2,1),2) = data2(:,2) * calib_factor;
+acc(1:size(data3,1),3) = data3(:,2) * calib_factor;
+
+plot(time, tach)
+
+
 
 %% 2) Tachometer
 rpm = [myDSP.speed_from_tach(time, tach(:,1)), myDSP.speed_from_tach(time, tach(:,2)), ...
     myDSP.speed_from_tach(time, tach(:,3))];
 
 plot(time, rpm); grid on; grid minor
-xlabel('frequency [Hz]'); ylabel('Shaft speed [RPM]')
-
+xlabel('frequency [Hz]'); ylabel('Shaft speed [RPM]'); ylim([0 5000])
 
 %% 3) Color map
 noblocks = 100;
@@ -208,9 +237,3 @@ for k = 1 : 3
     view(2); ylim([rpm_min_, rpm_nominal_])
     colorbar; xlabel('Frequency [Hz]'); ylabel('shaft speed [RPM]')
 end
-
-
-
-
-
-

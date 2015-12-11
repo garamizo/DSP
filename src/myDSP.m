@@ -100,13 +100,27 @@ function rpm = speed_from_tach(time, tach)
     len = length(tach);
     tach = reshape(tach, [len 1]);
     
-    thres = (prctile(tach, 75) - prctile(tach, 25))*0.65;
+    thres = (prctile(tach, 75) - prctile(tach, 25))*0.6;
     trigger = [false; tach(2:end) - tach(1:end-1) > thres];
     time_rising = time(trigger);
+    
+    bad = zeros(size(time_rising)) > 0;
+    avg_dt = time_rising(2) - time_rising(1);
+    for k = 2 : length(time_rising)
+        if time_rising(k)-time_rising(k-1) < 0.7*avg_dt
+            bad(k) = true;
+        else
+            avg_dt = avg_dt*0.5 + 0.5*(time_rising(k)-time_rising(k-1));
+        end
+    end
+    triggerb = find(trigger);
+    time_rising = time(triggerb(~bad));
+    
     w = 2*pi./(time_rising(2:end) - time_rising(1:end-1));
     w = [w; w(end)];
     
-    rpm = interp1(time(trigger), w, time, 'linear', 'extrap') * 60/(2*pi);
+%     plot(time, tach, time(trigger), tach(trigger), 'o', time(triggerb(~bad)), tach(triggerb(~bad)), '+')
+    rpm = interp1(time(triggerb(~bad)), w, time, 'linear', 'extrap') * 60/(2*pi);
 end
 
 end

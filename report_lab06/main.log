@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.9)  10 DEC 2015 11:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.9)  10 DEC 2015 16:57
 entering extended mode
 **main.tex
 (main.tex
@@ -1033,42 +1033,42 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 28.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 58--58
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 58--58
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 58--58
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 56--56
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 58--58
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 76--76
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 76--76
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 76--76
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
 
-Overfull \hbox (1.56685pt too wide) in paragraph at lines 74--74
+Overfull \hbox (1.56685pt too wide) in paragraph at lines 76--76
 [][][][]\OT1/cmr/m/n/10 background 
  []
 
@@ -1078,12 +1078,12 @@ LaTeX Warning: Marginpar on page 1 moved.
 
 LaTeX Warning: Marginpar on page 1 moved.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 85.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 87.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 85.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 87.
  [1{C:/Users/rastgaar/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
@@ -1095,24 +1095,24 @@ LaTeX Warning: Marginpar on page 2 moved.
 LaTeX Warning: Marginpar on page 2 moved.
 
 
-Underfull \hbox (badness 1043) in paragraph at lines 105--106
+Underfull \hbox (badness 1043) in paragraph at lines 107--108
 \OT1/cmr/m/n/10 cap-ture $32$ blocks of $476$ sam-ples, mea-sured at
  []
 
 <img/sample.png, id=17, 281.55188pt x 216.05719pt>
 File: img/sample.png Graphic file (type png)
  <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 120.
+Package pdftex.def Info: img/sample.png used on input line 122.
 (pdftex.def)             Requested size: 183.6007pt x 140.89044pt.
 
 [2 <./img/sample.png>] [3]
 File: img/sample.png Graphic file (type png)
  <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 163.
+Package pdftex.def Info: img/sample.png used on input line 165.
 (pdftex.def)             Requested size: 281.40286pt x 215.95773pt.
 File: img/sample.png Graphic file (type png)
  <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 171.
+Package pdftex.def Info: img/sample.png used on input line 173.
 (pdftex.def)             Requested size: 281.40286pt x 215.95773pt.
 
 
@@ -1120,7 +1120,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 File: img/sample.png Graphic file (type png)
 <use img/sample.png>
-Package pdftex.def Info: img/sample.png used on input line 179.
+Package pdftex.def Info: img/sample.png used on input line 181.
 (pdftex.def)             Requested size: 281.40286pt x 215.95773pt.
 
 
@@ -1133,40 +1133,69 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 (../src/lab06.m
+Overfull \hbox (29.00507pt too wide) in paragraph at lines 10--11
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (35.00513pt too wide) in paragraph at lines 11--13
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 11.
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 11.
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omlcmr.fd"
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 18.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 18.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omlcmr.fd"
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/it' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 11.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 18.
 
 Underfull \vbox (badness 2261) has occurred while \output is active []
 
  [6
 
-])
-[7] (../src/myDSP.m
-LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 43.
+]
+Overfull \hbox (17.00494pt too wide) in paragraph at lines 82--83
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
 
+[7] [8]
+Overfull \hbox (71.0055pt too wide) in paragraph at lines 169--170
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[9]
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 212.
+ [10]) [11] (../src/myDSP.m
 Underfull \vbox (badness 2261) has occurred while \output is active []
 
- [8
+ [12
 
 ]
-[9]) [10] (main.aux)
+[13]
+Overfull \hbox (155.00635pt too wide) in paragraph at lines 122--123
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][] 
+ []
+
+
+Overfull \hbox (17.00494pt too wide) in paragraph at lines 123--124
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+) [14] (main.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
- 21810 strings out of 493673
- 394949 string characters out of 3141521
+ 21848 strings out of 493673
+ 395369 string characters out of 3141521
  711538 words of memory out of 3000000
- 24793 multiletter control sequences out of 15000+200000
+ 24831 multiletter control sequences out of 15000+200000
  12617 words of font info for 49 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  62i,10n,76p,825b,2171s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1184,9 +1213,9 @@ iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2
 .9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (10 pages, 221071 bytes).
+Output written on main.pdf (14 pages, 239865 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
+ 108 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
