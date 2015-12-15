@@ -2,14 +2,30 @@
 % Guilherme Aramizo Ribeiro
 %% Definitions
 % TODO replace with experimental data
-rpm_nominal_ = 15000; % motor operating speed [rpm]
-rpm_min_ = rpm_nominal_ / 5;
-acc_sens_ = 3/(9.81*sqrt(2)); % V/(m/s^2)
-rot_unbalance_ = [1e-3 1e-4 3.5e-4 2e-5];
-orders_ = [1 2 5 7];
-motor_func_ = @(t,w) sum(bsxfun(@times, orders_.*sqrt(rot_unbalance_), w).^2 .* ...
-    sin(bsxfun(@plus, 2*pi*bsxfun(@times, orders_, w.*t), rand(size(orders_)))), 2);
+rpm_nominal_ = 2490; % motor operating speed [rpm]
+rpm_min_ = 225;
+acc_sens_ = 0.03417; % V/(m/s^2)
 
+%% Model of the (t,w) -> acc function
+
+deriv = @(y,Fs) savitzkyGolayFilt(-y,10,1,51) * 1/(1/Fs)^1;
+integ = @(y,Fs) cumsum(y)/Fs;
+orderFunc = @(w,mr,O) mr*O*(-w.^2.*sin(O*integ(w,Fs))*O + deriv(w,Fs).*cos(O*integ(w,Fs))); % force out
+
+sys = tf([1 0 0], [5 1 3e3]); % mass spring damper system
+motor_func_ = @(w,Fs) lsim(sys, orderFunc(w, 3e-6, 1) + ...
+    orderFunc(w, 2e-6, 2) + orderFunc(w, 1e-6, 5.3) + ...
+    orderFunc(w, 0.5e-6, 8) + orderFunc(w, 1e-6, 10), (0:length(w)-1)/Fs); % acc out
+
+% motor_func_ = @(w,Fs) lsim(sys, orderFunc(w, 1e-2, 1), (0:length(w)-1)/Fs); % acc out
+
+%{
+Fs = 13.1072e6/(256*5);
+time = 0 : (1/Fs) : 10;
+w = linspace(rpm_min_, rpm_nominal_, length(time))*2*pi/60;
+
+plot(time, motor_func_(time, w))
+%}
 %% Getting calibration factor
 % Calibrating a signal
 %     Input frequency range: [Fmin Fmax] = [149.2 149.2] Hz
@@ -65,27 +81,28 @@ calib_factor = (9.81*sqrt(2))/0.03417; % Calibration factor [(m/s^2)/V]
 %     Input frequency range: 10th order of the nominal speed
 %     Input voltage range: [Vmin Vmax] = ?
 % 
-%     Fs = 10240 = 13.1072e6/(256*5) > 2*Fmax = 2*(10*(rpm_nominal_/60))
-%     winsize = 40960 = Fs/0.25, df = Fs/winsize = 0.25
+%     Fs = 51200 = 13.1072e6/(256*1) > 2*Fmax = 2*(10*(rpm_nominal_/60))
+%     winsize = 204800 = Fs/0.25, df = Fs/winsize = 0.25
 %     noavg = 50
 
 % acquisition parameters
-Fs = 13.1072e6/(256*5);
-winsize = 40960;
+Fs = 13.1072e6/(256*31);% > 2*Fmax = 2*(10*(rpm_nominal_/60))
+winsize = 6606; % = Fs/0.25, df = Fs/winsize = 0.25
 noavg = 50;
 range = 5;
 bits = 24;
 
 % TODO replace with experimental data
-% time = linspace(0, (noavg+2)*winsize/Fs, (noavg+2)*winsize).';
-% rpm = rpm_nominal_ * ones(size(time)) / 2;
-% tach = square(2*pi*cumsum(rpm/60).*diff([-1/Fs; time])) + randn(size(time))/10;
-% acc = calib_factor * acc_sens_ * motor_func_(time, rpm/60);
+time = linspace(0, (noavg+2)*winsize/Fs, (noavg+2)*winsize).';
+w = ones(size(time)) *(rpm_nominal_/2)*2*pi/60;
+tach = square(cumsum(w)/Fs) + randn(size(time))/10;
+acc = calib_factor * myDSP.discretize( ...
+    acc_sens_ * motor_func_(w, Fs), bits, range);
 
-data = dlmread('../report_lab06/data/ss.csv', '\t', 1);
-time = data(:,1) - data(1,1);
-tach = data(:,4);
-acc = data(:,2) * calib_factor;
+% data = dlmread('../report_lab06/data/ss.csv', '\t', 1);
+% time = data(:,1) - data(1,1);
+% tach = data(:,4);
+% acc = data(:,2) * calib_factor;
 
 %{
 figure
@@ -93,7 +110,7 @@ ax2 = subplot(211); stairs(time, tach); xlim([0 180e-3])
 ax3 = subplot(212); stairs(time, acc); xlim([0 180e-3])
 linkaxes([ax2,ax3],'x')
 %}
-    
+
 yreshaped = myDSP.reshape(acc, winsize, 0);
 yreshaped(:,[1 end]) = []; % remove head and tail
 
@@ -124,25 +141,29 @@ avg_rpm = mean(myDSP.speed_from_tach(time, tach)); % Average RPM
 %     noavg = 50
 
 % acquisition parameters
-Fs = 13.1072e6/(256*5);
+Fs = 13.1072e6/(256*31);
 len = 45*Fs;
 % winsize = 40960;
 % noavg = 50;
 range = 5;
 bits = 24;
 
-% time = linspace(0, round(len*1.1)/Fs, round(len*1.1)).';
-% 
-% rpm_ = ones(size(time, 1), 3) * rpm_nominal_;
-% rpm_(time < 45, 1) = rpm_min_ + time(time < 45)*(rpm_nominal_-rpm_min_)/45;
-% rpm_(time < 20, 2) = rpm_min_ + time(time < 20)*(rpm_nominal_-rpm_min_)/20;
-% rpm_(time < 10, 3) = rpm_min_ + time(time < 10)*(rpm_nominal_-rpm_min_)/10;
-% 
-% tach = square(2*pi*bsxfun(@times, cumsum(rpm_/60), diff([-1/Fs; time])));
-% 
-% acc = calib_factor * acc_sens_ * [motor_func_(time, rpm_(:,1)/60), ...
-%     motor_func_(time, rpm_(:,2)/60), motor_func_(time, rpm_(:,3)/60)];
+time = linspace(0, round(len*1.1)/Fs, round(len*1.1)).';
 
+w = ones(size(time, 1), 3) * rpm_nominal_ * 2*pi/60;
+w(time < 45, 1) = (rpm_min_ + time(time < 45)*(rpm_nominal_-rpm_min_)/45)*2*pi/60;
+w(time < 20, 2) = (rpm_min_ + time(time < 20)*(rpm_nominal_-rpm_min_)/20)*2*pi/60;
+w(time < 10, 3) = (rpm_min_ + time(time < 10)*(rpm_nominal_-rpm_min_)/10)*2*pi/60;
+
+w(:,1) = w(:,1) - 30*sin(pi*time/time(end));
+
+th = cumsum(w, 1)/Fs;
+tach = square(th) + randn(size(th))/10;
+
+acc = calib_factor * myDSP.discretize(acc_sens_ * [motor_func_(w(:,1), Fs), ...
+    motor_func_(w(:,2), Fs), motor_func_(w(:,3), Fs)], bits, range);
+
+%{
 data1 = dlmread('../report_lab06/data/slow3.csv', '\t', 1);
 data2 = dlmread('../report_lab06/data/mid2.csv', '\t', 1);
 data3 = dlmread('../report_lab06/data/fast2.csv', '\t', 1);
@@ -160,43 +181,44 @@ tach(1:size(data3,1),3) = data3(:,4);
 acc(1:size(data1,1),1) = data1(:,2) * calib_factor;
 acc(1:size(data2,1),2) = data2(:,2) * calib_factor;
 acc(1:size(data3,1),3) = data3(:,2) * calib_factor;
-
-plot(time, tach)
-
-
+%}
 
 %% 2) Tachometer
-rpm = [myDSP.speed_from_tach(time, tach(:,1)), myDSP.speed_from_tach(time, tach(:,2)), ...
-    myDSP.speed_from_tach(time, tach(:,3))];
+rpm = [myDSP.speed_from_tach(time, tach(:,1)), myDSP.speed_from_tach( ...
+    time, tach(:,2)), myDSP.speed_from_tach(time, tach(:,3))];
 
+figure
 plot(time, rpm); grid on; grid minor
-xlabel('frequency [Hz]'); ylabel('Shaft speed [RPM]'); ylim([0 5000])
+xlabel('frequency [Hz]'); ylabel('Shaft speed [RPM]'); ylim([rpm_min_*0.9 rpm_nominal_*1.1])
 
 %% 3) Color map
-noblocks = 100;
 
-time_range = [45 20 10];
+t0 = [0 0 0];
+tend = [45 20 10];
 for k = 1 : 3
-    winsize = round((Fs*time_range(k))/noblocks); % 100 evenly spaced RPM bins
-    y = acc(:, k);
+    idx = time > t0(k) & time < tend(k);
+    len = sum(idx); % # samples of test
+    winsize = floor(len/100); % 100 evenly spaced RPM bins
 
-    yreshaped = myDSP.reshape(y, winsize, 0);
-    yreshaped = yreshaped(:,(1:noblocks) + 1); % remove head and tail
+    accblock = myDSP.reshape(acc(idx, k), winsize, 0);
+    rpmblock = myDSP.reshape(rpm(idx,k), winsize, 0);
 
     win = window(@hann, winsize);
+    gain = [1; 2*ones(winsize-1, 1)] / (rms(win)*winsize);
 
-    gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
-
-    GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
-    Gyy = filter(ones(1,5)/5, 1, conj(GY) .* GY, [], 2);
+    GY = bsxfun(@times, fft(bsxfun(@times, accblock, win)), gain);
+    Gyy = conj(GY) .* GY;
 
     f = linspace(0, Fs, winsize);
-    [freqs, rpms] = meshgrid(f, linspace(rpm_min_, rpm_nominal_, 100));
+    rpmOfBlock = mean(rpmblock, 1);
+    rpmSpaced = linspace(min(rpmOfBlock), max(rpmOfBlock), length(rpmOfBlock));
+    [F, RPM] = meshgrid(f, rpmSpaced);
     accs = sqrt(Gyy).';
+    ACC = interp2(f,rpmOfBlock,accs,F,RPM);
 
     figure;
-    surf(freqs, rpms, accs, 'EdgeColor','None');
-    view(2); xlim([0 Fs/2]); ylim([rpm_min_, rpm_nominal_])
+    surf(F, RPM, ACC, 'EdgeColor','None');
+    view(2); xlim([0 10*rpm_nominal_/60]); ylim([rpm_min_, rpm_nominal_])
     colorbar; xlabel('Frequency [Hz]'); ylabel('shaft speed [RPM]')
 end
 
