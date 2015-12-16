@@ -10,14 +10,14 @@ acc_sens_ = 0.03417; % V/(m/s^2)
 
 deriv = @(y,Fs) savitzkyGolayFilt(-y,10,1,51) * 1/(1/Fs)^1;
 integ = @(y,Fs) cumsum(y)/Fs;
-orderFunc = @(w,mr,O) mr*O*(-w.^2.*sin(O*integ(w,Fs))*O + deriv(w,Fs).*cos(O*integ(w,Fs))); % force out
+orderFunc = @(w,mr,O,Fs) mr*O*(-w.^2.*sin(O*integ(w,Fs))*O + deriv(w,Fs).*cos(O*integ(w,Fs))); % force out
 
 sys = tf([1 0 0], [5 1 3e3]); % mass spring damper system
-motor_func_ = @(w,Fs) lsim(sys, orderFunc(w, 3e-6, 1) + ...
-    orderFunc(w, 2e-6, 2) + orderFunc(w, 1e-6, 5.3) + ...
-    orderFunc(w, 0.5e-6, 8) + orderFunc(w, 1e-6, 10), (0:length(w)-1)/Fs); % acc out
+motor_func_ = @(w,Fs) lsim(sys, orderFunc(w, 3e-6, 1, Fs) + ...
+    orderFunc(w, 2e-6, 2, Fs) + orderFunc(w, 1e-6, 5.3, Fs) + ...
+    orderFunc(w, 0.5e-6, 8, Fs) + orderFunc(w, 1e-6, 10, Fs), (0:length(w)-1)/Fs); % acc out
 
-% motor_func_ = @(w,Fs) lsim(sys, orderFunc(w, 1e-2, 1), (0:length(w)-1)/Fs); % acc out
+% motor_func_ = @(w,Fs) lsim(sys, orderFunc(w, 1e-2, 1, Fs), (0:length(w)-1)/Fs); % acc out
 
 %{
 Fs = 13.1072e6/(256*5);
@@ -182,6 +182,16 @@ acc(1:size(data1,1),1) = data1(:,2) * calib_factor;
 acc(1:size(data2,1),2) = data2(:,2) * calib_factor;
 acc(1:size(data3,1),3) = data3(:,2) * calib_factor;
 %}
+    
+    %%
+rpm = w * 60/(2*pi);
+idx = time > 5 & time < 25;
+
+myDSP.OrderTVDFTOrderTracker2(acc(idx,2), Fs, rpm(idx,2))
+
+myDSP.TimeResamplingOrderTracker(acc(idx,2), Fs, rpm(idx,2))
+
+
 
 %% 2) Tachometer
 rpm = [myDSP.speed_from_tach(time, tach(:,1)), myDSP.speed_from_tach( ...

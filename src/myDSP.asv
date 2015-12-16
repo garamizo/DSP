@@ -100,13 +100,95 @@ function rpm = speed_from_tach(time, tach)
     len = length(tach);
     tach = reshape(tach, [len 1]);
     
-    thres = (prctile(tach, 80) - prctile(tach, 20))*0.8;
+    thres = (prctile(tach, 75) - prctile(tach, 25))*0.6;
     trigger = [false; tach(2:end) - tach(1:end-1) > thres];
     time_rising = time(trigger);
+    
+    bad = zeros(size(time_rising)) > 0;
+    avg_dt = time_rising(2) - time_rising(1);
+    for k = 2 : length(time_rising)
+        if time_rising(k)-time_rising(k-1) < 0.7*avg_dt
+            bad(k) = true;
+        else
+            avg_dt = avg_dt*0.5 + 0.5*(time_rising(k)-time_rising(k-1));
+        end
+    end
+    triggerb = find(trigger);
+    time_rising = time(triggerb(~bad));
+    
     w = 2*pi./(time_rising(2:end) - time_rising(1:end-1));
     w = [w; w(end)];
     
-    rpm = interp1(time(trigger), w, time, 'linear', 'extrap') * 60/(2*pi);
+%     plot(time, tach, time(trigger), tach(trigger), 'o', time(triggerb(~bad)), tach(triggerb(~bad)), '+')
+    rpm = interp1(time(triggerb(~bad)), w, time, 'linear', 'extrap') * 60/(2*pi);
+end
+
+function TimeTVDFTOrderTracker(signal, Fs, rpm)
+    
+    len = size(signal, 1);
+    o = linspace(0, sum(rpm)*2*pi/(60*Fs), len);
+    
+    if ~iscolumn(rpm) || ~isrow(o) || ~iscolumn(signal)
+        error('Wrong shapes')
+    end
+    
+    ker = cos(2*pi*cumsum(bsxfun(@times, o, rpm), 1)/(60*Fs));
+    a = sum(bsxfun(@times, signal, cos(ker)), 1) / len;
+    b = sum(bsxfun(@times, signal, sin(ker)), 1) / len;
+    
+    GY = a + 1j*b;
+    Gyy = conj(GY) .* GY;
+    plot(sqrt(Gyy))
+    
+    disp(1)
+end
+
+
+
+function [o, rpm, Gyy] = OrderResamplingOrderTracker(signal, Fs, rpmFull)
+    
+    len = size(signal, 1);
+    
+    th = cumsum(rpmFull*2*pi/60, 1)/Fs;
+    y = interp1(th, signal, linspace(th(1), th(end), len).');
+    
+    Os = len / th(end);
+    
+    [f, rpm, Gyy] = myDSP.TimeResamplingOrderTracker(y, Os, rpmFull);
+    xlabel('Order [1]')
+    
+    o = f * Os/Fs;
+end
+
+function [f, rpm, Gyy] = TimeResamplingOrderTracker(signal, Fs, rpmFull)
+    
+    if ~iscolumn(signal) || ~iscolumn(rpmFull)
+        error('input column vectors')
+    end
+    
+    winsize = 500;
+    overlap = 0.3;
+    
+    [yreshaped, nowin] = myDSP.reshape(signal, winsize, overlap);
+    
+    tmp = myDSP.reshape(rpmFull, winsize, overlap);
+    rpm = mean(tmp, 1);
+
+    win = window(@hann, winsize);
+    gain = [1; 2*ones(winsize-1, 1)] / (rms(win)*winsize);
+
+    GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
+    Gyy = conj(GY) .* GY;
+
+    f = linspace(0, Fs, winsize).';
+    
+    F = repmat(f, [1 nowin]);
+    RPM = repmat(rpm, [winsize 1]);
+    
+    figure; plot3(F(:,1:10:end), RPM(:,1:10:end), Gyy(:,1:10:end))
+    xlabel('Frequency [Hz]'); ylabel('Shaft Speed [RPM]'); zlabel('Amplitude [m/s^2]')
+    xlim([0 Fs/2]); grid on
+    set(gca, 'ZScale', 'log')
 end
 
 end
