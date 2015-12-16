@@ -125,13 +125,15 @@ end
 
 function colorMap(order, rpm, Gyy)
     
+    rpmSpaced = linspace(min(rpmOfBlock), max(rpmOfBlock), length(rpmOfBlock));
     [ORDER, RPM] = meshgrid(order, rpm);
-    ACC = sqrt(Gyy);
+    accs = sqrt(Gyy).';
+    ACC = interp2(f,rpmOfBlock,accs,F,RPM);
 
     figure;
-    surf(ORDER, RPM, ACC, 'EdgeColor','None');
-    view(2); ylim([min(rpm) max(rpm)]); xlim([min(order) max(order)])
-    colorbar; xlabel('Order [1]'); ylabel('shaft speed [RPM]')
+    surf(F, RPM, ACC, 'EdgeColor','None');
+    view(2); xlim([0 10*rpm_nominal_/60]); ylim([rpm_min_, rpm_nominal_])
+    colorbar; xlabel('Frequency [Hz]'); ylabel('shaft speed [RPM]')
 end
 
 function [o, rpmOut, Gyy] = TimeTVDFTOrderTracker(signalF, Fs, rpmF)

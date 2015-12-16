@@ -182,16 +182,6 @@ acc(1:size(data1,1),1) = data1(:,2) * calib_factor;
 acc(1:size(data2,1),2) = data2(:,2) * calib_factor;
 acc(1:size(data3,1),3) = data3(:,2) * calib_factor;
 %}
-    
-    %%
-rpm = w * 60/(2*pi);
-idx = time > 5 & time < 25;
-
-myDSP.OrderTVDFTOrderTracker2(acc(idx,2), Fs, rpm(idx,2))
-
-myDSP.TimeResamplingOrderTracker(acc(idx,2), Fs, rpm(idx,2))
-
-
 
 %% 2) Tachometer
 rpm = [myDSP.speed_from_tach(time, tach(:,1)), myDSP.speed_from_tach( ...
@@ -234,38 +224,15 @@ end
 
 %% 4) Order tracking
 %% FFT, constant order bandwidth
-noblocks = 100;
 
-time_range = [45 20 10];
+myDSP.colorMap(o, r, g) 
+
+rpm = w * 60/(2*pi);
+idx = time > 5 & time < 45;
+
 for k = 1 : 3
-    winsize = round((Fs*time_range(k))/noblocks); % 100 evenly spaced RPM bins
-    
-    angle = cumsum(rpm(time<time_range(k),k)*(2*pi/60));
-    R = angle(end) / noblocks;
-    
-    angle = cumsum(rpm(:,k)*(2*pi/60));
-    RR = angle(end) / noblocks;
+    [o, r, g] = myDSP.OrderResamplingOrderTracker(acc(idx,2), Fs, rpm(idx,2));
+    [o, r, g] = myDSP.OrderTVDFTOrderTracker(acc(idx,1), Fs, rpm(idx,1));
+    [o, r, g] = myDSP.TimeTVDFTOrderTracker(acc(idx,1), Fs, rpm(idx,1));
 
-    xx = cumsum(rpm(:,k));
-    xx = xx * t(end)/xx(end);
-    y = interp1(time, acc(:, k), xx);
 
-    yreshaped = myDSP.reshape(y, winsize, 0);
-    yreshaped = yreshaped(:,(1:noblocks) + 1); % remove head and tail
-
-    win = window(@hann, winsize);
-
-    gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
-
-    GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
-    Gyy = filter(ones(1,5)/5, 1, conj(GY) .* GY, [], 2);
-
-    f = linspace(0, winsize/R, winsize);
-    [freqs, rpms] = meshgrid(f, linspace(rpm_min_, rpm_nominal_, 100));
-    accs = sqrt(Gyy).';
-
-    figure;
-    surf(freqs, rpms, accs, 'EdgeColor','None');
-    view(2); ylim([rpm_min_, rpm_nominal_])
-    colorbar; xlabel('Frequency [Hz]'); ylabel('shaft speed [RPM]')
-end
