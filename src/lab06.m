@@ -130,6 +130,10 @@ xlim([0 Fs/2]); xlabel('frequency [Hz]'); ylabel('base acceleration [m/s^2]')
 %% 1)
 avg_rpm = mean(myDSP.speed_from_tach(time, tach)); % Average RPM
 
+%%
+idx = time > 5 & time < 10;
+myDSP.TimeTVDFTOrderTracker(acc(idx), Fs, w(idx)*60/(2*pi));
+
 %% Set #2, #3, #4
 
 % Transient: 0->45s, 0->20s, 0->10s, ranging full rpm bounds

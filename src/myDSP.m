@@ -3,39 +3,65 @@ methods(Static)
 
 function [SIGNAL, nowin] = reshape(signal, win_size, overlap_p)
 %RESHAPE Reshape vector in window blocks, with overlaps
-%     Example:
-%     % Generate data
-%     % Define dynamic system
-%     sys = rss(3, 2, 1);
-%     Fs = -100*min(real(eig(sys.A)));
-%     N = 10000;
+% FRF Estimation of simulated, real-looking data
+%     overlap = .25;
+%     Fs = 4096;
+%     bsize = 4096;
+%     len = 409600;
 % 
-%     time = linspace(0, N/Fs, N).';
-%     u = reshape(repmat(randn(round(N/20),1), [1 20]).', [N 1]);
-%     y = lsim(sys, u, time);
+%     % Simulate data ------------------------------
+%     sys = tf(1, [1e-2 5e-1 3e5]);
+%     sx = 1e-2;
+%     sy = 1e-2 * dcgain(sys);
 % 
-%     winsize = 1000;
-%     overlap = 0.3;
-%     yreshaped = myDSP.reshape(y, winsize, overlap);
-%     ureshaped = myDSP.reshape(u, winsize, overlap);
+%     t = (0:len-1).' / Fs;
+%     x = filter(ones(10,1)/10, 1, reshape(repmat(randn(len/4,1), [1 4]).', [len 1]));
+%     y = lsim(sys, x, t) + sy*randn(size(x));
+%     x = x + sx*randn(size(x));
+%     % --------------------------------------------
 % 
-%     win = window(@hann, winsize);
-%     gain = [1; 2*ones(winsize-1, 1)] / (mean(win)*winsize);
+%     blocks = floor(len*(1+overlap)/bsize);
 % 
-%     GY = bsxfun(@times, fft(bsxfun(@times, yreshaped, win)), gain);
-%     Gyy = squeeze(mean(conj(GY) .* GY, 2));
+%     for k = 1 : blocks
+%         idx = (k-1)*blocks + (1:bsize);
+%         xb(:,k) = x(idx);
+%         yb(:,k) = y(idx);
+%     end
 % 
-%     GU = bsxfun(@times, fft(bsxfun(@times, ureshaped, win)), gain);
-%     Guy = squeeze(mean(bsxfun(@times, conj(GU), GY), 2));
+%     win = window(@hann, bsize);
 % 
-%     f = linspace(0, Fs, winsize);
+%     GX = fft(bsxfun(@times, xb, win));
+%     GX = bsxfun(@times, GX, [1 2*ones(1, bsize-1)]'/(mean(win)*bsize));
 % 
-%     figure
-%     subplot(311); semilogy(f, sqrt(Gyy)); grid on; grid minor
-%     xlim([0 Fs/2]); xlabel('frequency [Hz]')
-%     subplot(312); semilogy(f, sqrt(abs(Guy))); grid on; grid minor
-%     xlim([0 Fs/2]); xlabel('frequency [Hz]')
-%     subplot(313); plot(time, y); xlabel('time [s]')
+%     GY = fft(bsxfun(@times, yb, win));
+%     GY = bsxfun(@times, GY, [1 2*ones(1, bsize-1)]'/(mean(win)*bsize));
+% 
+%     Gxx = mean(conj(GX) .* GX, 2);
+%     Gyy = mean(conj(GY) .* GY, 2);
+%     Gxy = mean(conj(GX) .* GY, 2);
+%     Gyx = mean(conj(GY) .* GX, 2);
+% 
+%     H1 = Gxy ./ Gxx;
+%     H2 = Gyy ./ Gyx;
+%     coh = (Gxy .* Gyx) ./ (Gxx .* Gyy);
+% 
+%     H0 = mean(GY ./ GX, 2);
+% 
+%     f = linspace(0, Fs, bsize);
+%     [mag, pha] = bode(sys, f*2*pi);
+% 
+%     figure(1)
+%     subplot(311); semilogy(f, [squeeze(mag) abs([H1 H2 H0])]); xlim([0 Fs/2])
+%     legend('Nominal', 'H1', 'H2', 'H0')
+%     subplot(312); plot(f, [deg2rad(squeeze(pha)) angle([H1 H2 H0])]); xlim([0 Fs/2])
+%     subplot(313); plot(f, coh); xlim([0 Fs/2]); ylim([0 1])
+%     set(gcf, 'Position', [59 82 645 856])
+% 
+%     figure(2)
+%     subplot(211); semilogy(f, sqrt(Gxx)); xlim([0 Fs/2]); ylabel('input')
+%     subplot(212); semilogy(f, sqrt(Gyy)); xlim([0 Fs/2]); ylabel('output')
+%     set(gcf, 'Position', [14 46 476 451])
+
 
     len = size(signal, 1); % signal length
     nocha = size(signal, 2); % number of channels
@@ -154,8 +180,8 @@ function [o, rpmOut, Gyy] = TimeTVDFTOrderTracker(signalF, Fs, rpmF)
     
     % ang is the cos/sin argument. a/b is the cos/sin coefficient
     ang = cumsum(bsxfun(@times, rpm, permute(o, [1 3 2])), 1)*2*pi/(60*Fs);
-    a = squeeze(mean(bsxfun(@times, signal, cos(ang)), 1)).'/rms(win);
-    b = squeeze(mean(bsxfun(@times, signal, sin(ang)), 1)).'/rms(win);
+    a = squeeze(mean(bsxfun(@times, signal, cos(ang)), 1))*2/rms(win);
+    b = squeeze(mean(bsxfun(@times, signal, sin(ang)), 1))*2/rms(win);
     
     GY = a + 1j*b;                  % linear spectrum
     Gyy = conj(GY) .* GY;           % auto-power
@@ -188,7 +214,7 @@ function [o, rpmOut, Gyy] = OrderTVDFTOrderTracker(signalF, Fs, rpmF)
         
         win = window(@hann, sum(idx));
         rpm = rpmF(idx);
-        signal = signalF(idx) .* win / rms(win);
+        signal = signalF(idx) .* win * 2 / rms(win);
         
         ang = cumsum(bsxfun(@times, rpm, o), 1) * 2*pi/(60*Fs);
         a(k,:) = squeeze(mean(bsxfun(@times, signal, cos(ang)), 1)).';
